@@ -48,11 +48,14 @@ LIBRA/
 │   ├── SENSORES DE FUERZA/             Celdas de carga, strain gauges, sensores magnéticos
 │   ├── SIMULADOR DE MARCHA/            Diseño mecánico de plataformas y bancos de prueba
 │   └── SOFTWARE/                       Arquitecturas de software embebido multi-sensor
+├── Evidencias/                         Fotos propias del equipo de laboratorio (no bibliográficas)
+│   └── simulador/                      Simulador físico existente y método de marcadores M1-M4
 ├── Reportes-Semanales/                 Informes y reportes de avance semanales
 │   ├── S1/
 │   └── S2/
 ├── Plan de trabajo 1_DPB4 - Proyecto Simulador de marcha (2).pdf
 ├── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (39 referencias, formato IEEE)
+├── Pendientes.md                       Lista de trabajo (buscar / editar / sintetizar / borrar), no es un entregable formal
 └── README.md
 ```
 

@@ -154,11 +154,54 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 > **Aclaración de alcance del Objetivo 1 (confirmada 07/08/2026):** el simulador de marcha (estructura mecánica, traslación horizontal por riel + cadena, traslación vertical por husillo + motor paso a paso, y punto de flexo-extensión en el soporte de la prótesis) **ya existe construido en el laboratorio**, de un proyecto anterior. El Objetivo 1 del proyecto actual no es diseñar esta plataforma desde cero, sino **instrumentarla**: integrar los sensores (IMU, celda de carga) y sus soportes/adaptaciones mecánicas sobre la estructura existente. Esto reduce el alcance de "diseño mecánico" a diseño de interfaces de montaje de sensores, no de la cinemática de la plataforma en sí.
 
+<table>
+<tr>
+<td><img src="Evidencias/simulador/vista-periferica.jpg" width="280"><br><sub>Vista general — riel horizontal, husillo vertical y soporte de prótesis</sub></td>
+<td><img src="Evidencias/simulador/parte-de-atras.jpg" width="280"><br><sub>Vista posterior — motores, husillos y cadena de traslación</sub></td>
+<td><img src="Evidencias/simulador/parte-instrumentada.jpg" width="280"><br><sub>Detalle del soporte donde se monta la prótesis</sub></td>
+</tr>
+</table>
+
 | Ref. | Mecanismo | DOF | Resultados / relevancia |
 |---|---|---|---|
 | [32] | Plataforma compacta y modular, traslación vertical y horizontal + flexo-extensión | 3 (plano sagital) | Determinaron que 3 DOF sagitales bastan para ensayar rodillas protésicas — validado con simulación hardware-in-the-loop. **Muy alta relevancia**: el simulador físico ya existente en el laboratorio usa el mismo principio de traslación vertical + horizontal + flexo-extensión que describe este paper, aunque con una disposición de ejes distinta. Sirve como respaldo bibliográfico de que la arquitectura ya construida (3 DOF sagitales) es una elección válida, no como referencia de diseño a implementar |
 | [33] | Banco de ensayo con actuación para cargas realistas | No especificado | Documenta limitaciones prácticas (velocidad y longitud de paso limitadas) a anticipar en el diseño propio |
 | [34] | Plataforma Gough-Stewart, 6 actuadores lineales Festo EPCO | 6 | Arquitectura de referencia de actuación lineal motorizada (guía + servomotor + husillo) aplicable a una versión simplificada de la plataforma |
+
+**Qué más aporta [32] más allá de la arquitectura (relevante para Objetivo 4 — validación):**
+
+- **Metodología para justificar el número de DOF, no solo el resultado.** No asumieron que 3 DOF bastan: partieron de un modelo "ideal" de 6 DOF y compararon sistemáticamente distintos casos de DOF "congelados" (arrestados) contra ese ideal, hasta encontrar el mínimo conjunto (flexo-extensión + traslación vertical + traslación horizontal, plano sagital) que reproduce el comportamiento relevante. Es un método replicable si en algún momento se quisiera re-justificar o cuestionar los 3 DOF del simulador ya construido, en vez de darlos por sentado.
+- **Aplicación real de validación cruzada simulador–sujeto humano.** Usaron el simulador para validar una rodilla protésica policéntrica propia (IITM Polycentric Knee, IPK) — específicamente para confirmar que la rodilla se extiende sin necesidad de un resorte de asistencia a la extensión durante el balanceo (*swing phase*). Luego, con 3 sujetos que usan prótesis pasivas regularmente, compararon marcha real (con su prótesis habitual y con la IPK) contra las predicciones del simulador, encontrando correlación amplia entre ambos.
+- **Por qué importa para este proyecto:** es el ejemplo más cercano encontrado de un protocolo de validación de dos niveles — (1) simulador vs. modelo/hipótesis de diseño, (2) simulador vs. sujetos humanos reales — que es exactamente el tipo de protocolo que el Objetivo 4 de este proyecto necesita definir para la plataforma instrumentada, sustituyendo la validación con sujetos humanos por una validación cruzada IMU/celda de carga vs. posición controlada del motor/encoder (ver Sección 10, Validación).
+
+### 8.1. Alcance protésico del simulador existente — confirmado
+
+> **Confirmado 07/08/2026, vía conversación con Luis Plasencia (compañero de laboratorio):** el simulador **es transtibial únicamente**, no multi-protésico. Sí permite ajustar el nivel de amputación simulado (longitud del segmento tibial residual: alto, medio o bajo). No es una confirmación formal del asesor (Dante Elias) — si se necesita para el informe final o para justificar el objetivo 1 ante el curso, conviene pedirle la confirmación explícita a él también.
+
+### 8.2. Método de referencia cinemática por marcadores (discusión con Luis Plasencia, 07/08/2026)
+
+Se discutió un método para obtener el ángulo de inclinación del segmento tibial (θ) como referencia independiente para validar la IMU, usando 4 marcadores colocados sobre fotos/video de la pierna montada en el simulador:
+
+- **M1** — tobillo/pie (marcado con cinta).
+- **M2** — muslo, marcador anatómico sobre la piel (segmento proximal).
+- **M3, M4** — cerca de la rodilla, colocados siguiendo la geometría propia del mecanismo del simulador (no son puntos anatómicos, sino puntos que replican el eje/geometría del simulador).
+- **θ** — ángulo entre el segmento tibial (línea que pasa por M1 y la zona de la rodilla) y una línea de referencia vertical u horizontal.
+
+<table>
+<tr>
+<td><img src="Evidencias/simulador/angulo-lineaHorizontal.jpeg" width="320"><br><sub>θ medido respecto a una línea de referencia horizontal</sub></td>
+<td><img src="Evidencias/simulador/angulo-lineaVertical.jpeg" width="220"><br><sub>θ medido respecto a una línea de referencia vertical (mismo valor de ángulo, distinta referencia)</sub></td>
+</tr>
+</table>
+
+**Hallazgo clave:** el ángulo θ da el mismo valor numérico ya sea que se calcule con la referencia anatómica (M2) o con la referencia geométrica del simulador (M3/M4) — ambos métodos son equivalentes en magnitud a lo largo de todo el ciclo de marcha. Esto tiene dos implicancias prácticas:
+
+1. El ángulo también se puede obtener analíticamente a partir de la geometría/posición comandada del propio mecanismo del simulador (sin necesidad de marcadores ni cámara), ya que el simulador controla el movimiento de forma conocida.
+2. Los marcadores (M1–M4) sirven como una verificación óptica independiente y de bajo costo del ángulo, alternativa/complementaria a un sistema de captura de movimiento profesional (comparar con Sección 2: [7]–[9], que sí usan sistemas ópticos comerciales tipo Qualisys/NOKOV).
+
+**Relevancia para Objetivo 4 (validación):** esto encaja directamente con el punto (2) del protocolo de validación ya definido en la Sección 10 — "validación cruzada IMU vs. posición controlada del motor/encoder de la plataforma". El método de marcadores M1–M4 aporta una tercera vía de verificación (óptica manual, de costo prácticamente nulo) para contrastar contra la IMU y contra el ángulo geométrico del encoder, sin necesitar un sistema de captura de movimiento comercial.
+
+**Decisión (07/08/2026):** este método queda como verificación puntual (una toma de fotos de referencia), no como requerimiento de la plataforma ni como parte del protocolo formal de validación del Objetivo 4.
 
 ---
 
@@ -187,7 +230,7 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 **Software.** Adquisición continua y sincronizada por timestamp compartido — no requiere protocolo inalámbrico complejo tipo LSL/BLE ([28]–[30]) porque los sensores están fijos en la plataforma, no en un sujeto, y no hay lazo de control en tiempo real que cerrar (ver aclaración de alcance arriba). Comunicación I2C/SPI para IMU y ADC dedicado para celda de carga. Registro, visualización y almacenamiento continuo durante toda la simulación. Arquitectura modular para agregar sensores sin rediseño (recomendación de [31]) — este mismo diseño modular es lo que permitiría, a futuro y fuera de alcance actual, incorporar un lazo de control (p. ej. PID) sin rehacer la adquisición de datos.
 
-**Validación.** Protocolo de dos niveles, enfocado en la precisión y confiabilidad del sensado continuo (no en control en tiempo real): (1) calibración estática y dinámica de IMU y celda de carga con trazabilidad a pesos/ángulos conocidos (ISO 7500-1 [25] para fuerza); (2) validación cruzada IMU vs. posición controlada del motor/encoder de la plataforma como referencia de bajo costo, reemplazando la necesidad de un sistema óptico. Perfil de carga de ensayo referenciado a ISO 22675 [27].
+**Validación.** Protocolo de dos niveles, enfocado en la precisión y confiabilidad del sensado continuo (no en control en tiempo real): (1) calibración estática y dinámica de IMU y celda de carga con trazabilidad a pesos/ángulos conocidos (ISO 7500-1 [25] para fuerza); (2) validación cruzada IMU vs. posición controlada del motor/encoder de la plataforma como referencia de bajo costo, reemplazando la necesidad de un sistema óptico. Perfil de carga de ensayo referenciado a ISO 22675 [27]. Estructura de protocolo inspirada en [32] (ver nota ampliada en Sección 8): ellos validaron primero contra un modelo/hipótesis de diseño (número de DOF) y luego contra sujetos humanos reales; aquí el equivalente sería validar primero el sensado contra referencias controladas de laboratorio (paso 1 y 2 arriba) y, si el alcance se ampliara a futuro, contra datos de marcha humana real como referencia adicional.
 
 **Trabajo futuro (fuera de alcance actual).** Control en lazo cerrado en tiempo real (p. ej. controlador PID) que use el sensado de esta plataforma para retroalimentar y autocorregir al simulador de marcha. Requeriría, cuando se aborde, definir presupuesto de latencia end-to-end (sensor → procesamiento → actuador) y posiblemente rediseñar la capa de comunicación para reducir tiempos de respuesta.
 
@@ -257,13 +300,11 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 [31] M. Toptsis, N. Karkanis, A. Giannakoulas, and T. Kaifas, "A review of embedded software architectures for multi-sensor wearable devices: Sensor fusion techniques and future research directions," *Electronics*, vol. 15, no. 2, art. 295, 2026. doi: 10.3390/electronics15020295. — **verificado y corregido: al descargar el texto completo del PDF se encontró que la lista de autores tiene 4 nombres (Dept. of Electrical and Computer Engineering, Democritus Univ. of Thrace, Grecia); los metadatos web solo mostraban al autor de correspondencia (T. Kaifas), lo que había llevado a reportarlo erróneamente como autor único.**
 
-[32] S. Sudeesh, M. S. Shunmugam, and S. Sujatha, "A compact and cost-effective gait simulator to advance prosthesis development with reduced reliance on human subject testing: Development, validation and application," *Mech. Mach. Theory*, 2024.
+[32] S. Sudeesh, M. S. Shunmugam, and S. Sujatha, "A compact and cost-effective gait simulator to advance prosthesis development with reduced reliance on human subject testing: Development, validation and application," *Medical Engineering & Physics*, vol. 134, art. 104254, 2024. doi: 10.1016/j.medengphy.2024.104254 — **corregido: la revista es Medical Engineering & Physics (grupo R2D2, IIT Madras), no Mechanism and Machine Theory como se había reportado inicialmente; verificado contra la página de publicaciones del laboratorio (r2d2.iitm.ac.in) y ScienceDirect (PII S1350453324001553, prefijo ISSN 1350-4533 = Med. Eng. Phys.).**
 
 [33] J. Thiele, S. Gallinger, P. Seufert, and M. Kraft, "The gait simulator for lower limb exoprostheses — overview and first measurements for comparison of microprocessor controlled knee joints," *Facta Univ., Ser. Mech. Eng.*, 2015.
 
 [34] S. M. Güttler, A. M. Poliakov, and V. I. Pakhaliuk, "Universal mechatronic test bench-gait simulator for testing lower limb prostheses," in *Proc. 2022 IEEE 23rd Int. Conf. of Young Professionals in Electron Devices and Materials (EDM)*, 2022. [Online]. Available: https://ieeexplore.ieee.org/document/9855100 — **verificado por búsqueda cruzada (autores y nombre del congreso); recomendable confirmar contra IEEE Xplore antes del informe final.**
-
-[35]* Valores numéricos iniciales de niveles de carga P3–P6 de ISO 10328 (Sección 6.1, tabla original), compilados de fuentes secundarias sin verificación directa contra la norma — **usar con precaución; el valor de P5 fue contradicho por [37] (ver Sección 6.1).**
 
 [36] S. Lapapong, S. Sucharitpwatskul, N. Pitaksapsin, C. Srisurangkul, S. Lerspalungsanti, R. Naewngerndee, K. Sedchaicharn, W. Chonnaparamutt, and J. Pipitpukdee, "Finite element modeling and validation of a four-bar linkage prosthetic knee under static and cyclic strength tests," *J. Assist. Rehabil. Ther. Technol.*, vol. 2, art. 23211, 2014. doi: 10.3402/jartt.v2.23211. — **fuente primaria confirmada: reproduce Tabla 1 de ISO 10328:2006 para nivel P4.**
 
@@ -275,13 +316,4 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 ---
 
-## Pendientes antes de llevar esto al informe final
-
-*(Actualizado — búsqueda adicional semana 1, ver Sección 6.1 y lista de referencias)*
-
-1. **Completado en esta actualización:** [1], [5], [6], [13], [16], [31], [34] quedaron verificados (autor/año/revista/DOI según corresponda; ver notas junto a cada referencia). [6] tenía un error de apellido corregido (Cierviati → Civeriati).
-2. **Parcialmente resuelto:** [2] — se identificó con alta probabilidad al autor (R. Davis, Cleveland State Univ.) y un artículo relacionado publicado (ACC 2014), pero no se pudo confirmar directamente el año/título exacto de la tesis de maestría contra OhioLINK; verificar antes del informe final.
-3. **Sigue sin resolver:** [4] (Nie et al. — documento IEEE muy reciente, no indexado en las búsquedas realizadas; requiere acceso directo a IEEE Xplore), [12] y [15] (fuentes sin autor identificable, posiblemente capítulos o secciones de reportes técnicos en vez de artículos independientes — verificar si son citables como tales).
-4. **P4 (proof y ultimate Condición I) y P5 (proof y ultimate Condición I) ya están verificados con fuente primaria o corroboración cruzada sólida ([36], [37], y confirmación adicional de $F_{ultimate}$ P4 = 4130 N).** P3 y P6 siguen sin verificación confiable: se encontró un candidato para P3 (Bonacini et al. 2009, ref. [39]) pero con inconsistencias que impiden confirmarlo como el valor oficial del nivel P3, y solo un dato suelto y no verificable para P6. Recomendación: dimensionar la celda de carga sobre P5 (4480 N) con margen, salvo que el proyecto deba cubrir usuarios >100 kg, en cuyo caso sí se justifica seguir invirtiendo tiempo en verificar P6 contra la sala de lectura de INACAL.
-5. Confirmar el método de filtrado usado en [9] para la reducción de deriva (Kalman vs. complementario) — actualmente no especificado en la fuente.
-6. Decidir si se amplía el alcance a sensores de presión distribuida (FSR array) o se mantiene solo celda de carga puntual, y ajustar la Sección 6 del proyecto en consecuencia.
+*Los pendientes de esta revisión bibliográfica (referencias por confirmar, verificación de P3/P6, decisiones de alcance) se llevan en `Pendientes.md`, en la raíz del proyecto.*
