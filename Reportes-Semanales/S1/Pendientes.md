@@ -9,7 +9,7 @@ Nota de trabajo informal (no es parte de los reportes formales), para triar qué
 - [ ] [12] "Evaluating shear and normal force with the use of an instrumented transtibial socket" — sin autor identificado.
 - [ ] [15] "Instrumented socket inserts for sensing interaction at the limb-socket interface" — sin autor identificado.
 - [ ] [9] Confirmar método de filtrado de deriva usado (Kalman vs. complementario) — no especificado en la fuente.
-- [ ] Confirmación formal del asesor (Dante Elias) sobre el alcance real del Objetivo 1: plataforma ya existe (instrumentar, no diseñar) y simulador transtibial únicamente. Hoy solo está confirmado informalmente por Luis Plasencia.
+- [ ] Confirmación formal del asesor (Dante Elias) sobre el simulador existente: ya hay una estructura base construida y es transtibial únicamente. Hoy solo está confirmado informalmente por un compañero de laboratorio.
 - [x] Método de marcadores M1–M4 — resuelto (07/08/2026): es solo verificación puntual, no requerimiento de la plataforma ni parte del protocolo formal de validación.
 - [ ] P3 y P6 de ISO 10328 sin verificación confiable (P3 tiene candidato no confirmado en [39]; P6 solo un dato suelto) — no priorizar salvo que el proyecto deba cubrir usuarios >100 kg.
 

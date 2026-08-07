@@ -26,11 +26,11 @@
 
 ## Descripción del proyecto
 
-En el laboratorio ya existe una plataforma mecánica de simulación de marcha (traslación horizontal por riel + cadena, traslación vertical por husillo y motor paso a paso, y un punto de flexo-extensión en el soporte de la prótesis), construida en un proyecto anterior. Este proyecto **no diseña esa plataforma desde cero**: la **instrumenta**, integrando sensores (IMU y celda de carga), su electrónica de adquisición y un software de registro sincronizado, con el fin de validar prótesis transtibiales bajo cargas y cinemática trazables a normas ISO.
+En el laboratorio ya existe una plataforma mecánica de simulación de marcha (traslación horizontal por riel + cadena, traslación vertical por husillo y motor paso a paso, y un punto de flexo-extensión en el soporte de la prótesis), construida en un proyecto anterior. Este proyecto parte de esa base ya construida para **integrar sensores** (IMU y celda de carga), su electrónica de adquisición y un software de registro sincronizado, con el fin de validar prótesis transtibiales bajo cargas y cinemática trazables a normas ISO. El diseño mecánico puede implicar tanto soportes/adaptadores externos como modificaciones a la estructura existente, según lo que requiera la integración final de los sensores.
 
 ## Objetivos específicos
 
-1. **Diseño mecánico** — Diseñar los soportes/adaptadores para montar la IMU y la celda de carga sobre la estructura ya existente, sin alterar su cinemática.
+1. **Diseño mecánico** — Diseñar los soportes/adaptadores (y, de ser necesario, modificaciones a la estructura ya existente) para montar la IMU y la celda de carga, preservando la cinemática de la plataforma.
 2. **Sistema electrónico** — Seleccionar e integrar sensores de bajo costo (IMU MEMS, celda de carga) dimensionados según las cargas de referencia de ISO 10328.
 3. **Software** — Implementar adquisición continua y sincronizada (I2C/SPI para IMU, ADC dedicado para la celda de carga) con registro, visualización y almacenamiento.
 4. **Validación** — Definir un protocolo de calibración y validación cruzada (IMU vs. encoder de la plataforma) anclado a ISO 7500-1 e ISO 22675.
