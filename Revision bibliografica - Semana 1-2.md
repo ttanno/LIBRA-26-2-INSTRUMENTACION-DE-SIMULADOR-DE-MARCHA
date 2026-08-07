@@ -1,9 +1,9 @@
 # Revisión Bibliográfica — Plataforma Móvil Instrumentada para Simulador de Marcha
 
-**Proyecto:** Plataforma Móvil Instrumentada para Simulador de Marcha
-**Alumno:** Alessandro Jesus Felix Tello
-**Asesor:** Dante Angel Elias Giordano
-**Formato de citación:** IEEE (numerado, lista de referencias al final)
+**Proyecto:** Plataforma Móvil Instrumentada para Simulador de Marcha  
+**Alumno:** Alessandro Jesus Felix Tello  
+**Asesor:** Dante Angel Elias Giordano  
+**Formato de citación:** IEEE   
 **Estado:** Semana 1–2 — revisión del estado del arte y definición de requerimientos
 
 > Nota general sobre citas: las entradas marcadas con (*) tienen información de autor incompleta o no verificada con certeza en la búsqueda. Deben confirmarse contra la fuente original antes de usarse en el informe final.
