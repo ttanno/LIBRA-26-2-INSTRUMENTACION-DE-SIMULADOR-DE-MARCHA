@@ -1,6 +1,6 @@
-# Pendientes del proyecto — actualizado 07/08/2026
+# Pendientes — Semana 1 (actualizado 07/08/2026)
 
-Nota de trabajo informal (no es parte de los reportes formales), para triar qué buscar, editar, sintetizar o borrar. Referencias entre `[ ]` apuntan a "Revisión bibliográfica - Semana 1-2.md" salvo que se indique otro archivo.
+Nota de trabajo informal (no es parte de los reportes formales), para triar qué buscar, editar, sintetizar o borrar. Referencias entre `[ ]` apuntan a `Estado-del-arte/Revision bibliografica - Semana 1-2.md` salvo que se indique otro archivo. Este archivo se actualiza cada semana; al cerrar la semana, copiar los pendientes que sigan abiertos al `Pendientes.md` de la semana siguiente.
 
 ## Buscar
 

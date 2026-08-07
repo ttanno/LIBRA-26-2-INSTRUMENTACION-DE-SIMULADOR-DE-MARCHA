@@ -156,9 +156,9 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 <table>
 <tr>
-<td><img src="Evidencias/simulador/vista-periferica.jpg" width="280"><br><sub>Vista general — riel horizontal, husillo vertical y soporte de prótesis</sub></td>
-<td><img src="Evidencias/simulador/parte-de-atras.jpg" width="280"><br><sub>Vista posterior — motores, husillos y cadena de traslación</sub></td>
-<td><img src="Evidencias/simulador/parte-instrumentada.jpg" width="280"><br><sub>Detalle del soporte donde se monta la prótesis</sub></td>
+<td><img src="../Evidencias/simulador/vista-periferica.jpg" width="280"><br><sub>Vista general — riel horizontal, husillo vertical y soporte de prótesis</sub></td>
+<td><img src="../Evidencias/simulador/parte-de-atras.jpg" width="280"><br><sub>Vista posterior — motores, husillos y cadena de traslación</sub></td>
+<td><img src="../Evidencias/simulador/parte-instrumentada.jpg" width="280"><br><sub>Detalle del soporte donde se monta la prótesis</sub></td>
 </tr>
 </table>
 
@@ -189,8 +189,8 @@ Se discutió un método para obtener el ángulo de inclinación del segmento tib
 
 <table>
 <tr>
-<td><img src="Evidencias/simulador/angulo-lineaHorizontal.jpeg" width="320"><br><sub>θ medido respecto a una línea de referencia horizontal</sub></td>
-<td><img src="Evidencias/simulador/angulo-lineaVertical.jpeg" width="220"><br><sub>θ medido respecto a una línea de referencia vertical (mismo valor de ángulo, distinta referencia)</sub></td>
+<td><img src="../Evidencias/simulador/angulo-lineaHorizontal.jpeg" width="320"><br><sub>θ medido respecto a una línea de referencia horizontal</sub></td>
+<td><img src="../Evidencias/simulador/angulo-lineaVertical.jpeg" width="220"><br><sub>θ medido respecto a una línea de referencia vertical (mismo valor de ángulo, distinta referencia)</sub></td>
 </tr>
 </table>
 
@@ -316,4 +316,4 @@ Se discutió un método para obtener el ángulo de inclinación del segmento tib
 
 ---
 
-*Los pendientes de esta revisión bibliográfica (referencias por confirmar, verificación de P3/P6, decisiones de alcance) se llevan en `Pendientes.md`, en la raíz del proyecto.*
+*Los pendientes de esta revisión bibliográfica (referencias por confirmar, verificación de P3/P6, decisiones de alcance) se llevan en el `Pendientes.md` de la semana en curso, dentro de `Reportes-Semanales/S<n>/`.*

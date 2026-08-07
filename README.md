@@ -43,25 +43,27 @@ La plataforma **sensa de forma continua** (registro/visualización) durante el u
 
 ```
 LIBRA/
-├── Estado-del-arte/                    Fichas de lectura y fuentes primarias (PDF) organizadas por tema
+├── Estado-del-arte/                    Fichas de lectura, fuentes primarias (PDF) y la síntesis bibliográfica
 │   ├── ISO/                            Normas y ensayos estructurales de prótesis
 │   ├── SENSORES DE FUERZA/             Celdas de carga, strain gauges, sensores magnéticos
 │   ├── SIMULADOR DE MARCHA/            Diseño mecánico de plataformas y bancos de prueba
-│   └── SOFTWARE/                       Arquitecturas de software embebido multi-sensor
-├── Evidencias/                         Fotos propias del equipo de laboratorio (no bibliográficas)
+│   ├── SOFTWARE/                       Arquitecturas de software embebido multi-sensor
+│   └── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (39 referencias, formato IEEE)
+├── Evidencias/                         Fotos propias del equipo de laboratorio (no bibliográficas, reutilizables entre semanas)
 │   └── simulador/                      Simulador físico existente y método de marcadores M1-M4
-├── Reportes-Semanales/                 Informes y reportes de avance semanales
+├── Reportes-Semanales/                 Informes y reportes de avance, por semana
 │   ├── S1/
+│   │   ├── S1 - Informe Semanal...     Informe semanal (formato PUCP)
+│   │   ├── S1 - Reporte de Avance...   Reporte de avance (formato PUCP)
+│   │   └── Pendientes.md               Lista de trabajo de esa semana (buscar / editar / sintetizar / borrar); se actualiza semana a semana
 │   └── S2/
 ├── Plan de trabajo 1_DPB4 - Proyecto Simulador de marcha (2).pdf
-├── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (39 referencias, formato IEEE)
-├── Pendientes.md                       Lista de trabajo (buscar / editar / sintetizar / borrar), no es un entregable formal
 └── README.md
 ```
 
 ## Estado del arte
 
-La [revisión bibliográfica](./Revision%20bibliografica%20-%20Semana%201-2.md) consolida el estado del arte en:
+La [revisión bibliográfica](./Estado-del-arte/Revision%20bibliografica%20-%20Semana%201-2.md) consolida el estado del arte en:
 
 - Simuladores de marcha con sensórica embebida
 - Concordancia entre IMU y sistemas ópticos de captura de movimiento
@@ -82,7 +84,7 @@ En [`Reportes-Semanales/`](./Reportes-Semanales) se archivan, por semana, el inf
 
 ## Requerimientos técnicos derivados
 
-Resumen de los requerimientos definidos a partir del estado del arte (detalle completo en la [revisión bibliográfica](./Revision%20bibliografica%20-%20Semana%201-2.md#10-requerimientos-técnicos-derivados-cierre-de-semana-2)):
+Resumen de los requerimientos definidos a partir del estado del arte (detalle completo en la [revisión bibliográfica](./Estado-del-arte/Revision%20bibliografica%20-%20Semana%201-2.md#10-requerimientos-técnicos-derivados-cierre-de-semana-2)):
 
 | Componente | Requerimiento orientativo |
 |---|---|
