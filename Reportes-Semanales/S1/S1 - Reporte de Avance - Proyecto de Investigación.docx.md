@@ -31,15 +31,16 @@
 
 | Actividad | Objetivo | Descripción | Resultados |
 | :---- | :---- | :---- | :---- |
-| A1: Revisión del estado del arte | OE1-OE4 (transversal) | Revisión de 38 fuentes en 8 bloques temáticos: simuladores instrumentados, validación IMU, calibración de sensores, celdas de carga, protocolos de calibración, normas ISO, software de sincronización y diseño mecánico | Documento de revisión bibliográfica completo con citas IEEE |
-| A2: Síntesis vs. objetivos | OE1-OE4 | Tabla que cruza el estado del arte con los 4 objetivos específicos e identifica la brecha central | Brecha central identificada: ningún sistema revisado integra plataforma + IMU + celda de carga + software + validación normativa de bajo costo |
-| A3: Requerimientos técnicos preliminares | OE1-OE4 | Traducción de hallazgos bibliográficos en especificaciones (DOF, IMU, rango de fuerza, arquitectura de software, protocolo de validación) | Sección de requerimientos técnicos con aclaración de alcance (sensado continuo, sin lazo de control en tiempo real) |
-| A4: Verificación normativa ISO 10328 | OE4 | Contraste de valores de carga (P3-P6) contra fuentes primarias que citan la norma | Valores de P4 confirmados; valor de P5 corregido (2240/4480 N); P3 y P6 pendientes |
-| A5: Aclaración sobre el simulador existente | OE1 | Revisión de fotos del simulador físico existente y conversación con compañero de laboratorio sobre su alcance protésico | Confirmado: ya existe una estructura base construida y el simulador es transtibial únicamente, no multi-protésico |
+| A1: Revisión del estado del arte | OE1-OE4 (transversal) | Revisión bibliográfica por bloques temáticos: simuladores instrumentados, sensórica (IMU y fuerza), normas técnicas, software de sincronización y diseño mecánico | Documento de revisión bibliográfica con citas IEEE |
+| A2: Síntesis vs. objetivos | OE1-OE4 | Tabla que cruza el estado del arte con los 4 objetivos específicos | Brecha central identificada: ningún sistema revisado integra plataforma + sensórica + software + validación normativa de bajo costo |
+| A3: Requerimientos técnicos preliminares | OE1-OE4 | Especificaciones orientativas por área (mecánica, sensórica, software, validación) | Sección de requerimientos técnicos, con aclaración de que el sensado será continuo, sin lazo de control en tiempo real |
+| A4: Verificación normativa ISO 10328 | OE4 | Contraste contra fuentes primarias de los rangos de fuerza que exige la norma según el peso simulado del usuario | Niveles de carga más relevantes confirmados; los de pesos menos comunes quedan pendientes |
+| A5: Aclaración sobre el simulador existente | OE1 | Revisión de fotos del simulador físico y conversación con un compañero de laboratorio sobre su alcance protésico | Confirmado: ya existe una estructura base construida y el simulador es transtibial únicamente |
 
 **Situaciones surgidas en el desarrollo del proyecto**
 
 | Eventos | Fecha de Ocurrencia | Actividad Afectada | Acciones Tomadas |
 | :---- | :---- | :---- | :---- |
-| E1: Norma ISO 10328 es un documento de pago con valores discrepantes entre fuentes secundarias | 05/08/2026 | A4: Verificación normativa | Acceso vía sala de lectura virtual de INACAL (biblioteca PUCP) y verificación cruzada con papers que citan textualmente la norma vigente (2016), priorizando fuentes con permiso de reproducción explícito |
-| E2: Aclaración sobre el simulador existente (ya construido; transtibial, no multi-protésico) | 07/08/2026 | A1: Revisión del estado del arte | Documentado en la revisión bibliográfica; confirmación informal de compañero de laboratorio, pendiente validar con el asesor |
+| E1: Acceso a la norma ISO 10328 (documento de pago, no disponible vía INACAL ni otras fuentes institucionales) | 05/08/2026 | A4: Verificación normativa | Verificación indirecta contra papers que citan la norma; se sigue buscando acceso institucional |
+| E2: Problema de acceso al sistema de bibliotecas de la PUCP con la cuenta del alumno | 07/08/2026 | A1, A4 | Pendiente de resolver con la biblioteca |
+| E3: Aclaración sobre el simulador existente | 07/08/2026 | A1: Revisión del estado del arte | Documentado en la revisión bibliográfica; confirmación informal, pendiente validar con el asesor |
