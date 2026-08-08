@@ -134,7 +134,7 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 ## 8. Diseño mecánico de plataformas móviles y mecanismos de traslación en bancos de prueba *(bloque nuevo — objetivo 1)*
 
-> **Aclaración de alcance del Objetivo 1 (07/08/2026):** el simulador de marcha (estructura mecánica, traslación horizontal por riel + cadena, traslación vertical por husillo + motor paso a paso, y punto de flexo-extensión en el soporte de la prótesis) **ya existe construido en el laboratorio**, de un proyecto anterior. Esto no cambia el Objetivo 1 (sigue siendo diseño mecánico), pero sí aclara el punto de partida: no se parte de cero, sino de una base ya construida sobre la cual hay que integrar los sensores (IMU, celda de carga). El diseño mecánico puede incluir tanto adaptadores/soportes externos como modificar o rediseñar partes de la estructura existente si así lo requiere la integración de los nuevos sensores — está por verse según el diseño final.
+> **Contexto del simulador:** el simulador de marcha (estructura mecánica, traslación horizontal por riel + cadena, traslación vertical por husillo + motor paso a paso, y punto de flexo-extensión en el soporte de la prótesis) ya existe construido en el laboratorio, de un proyecto anterior. El diseño mecánico del Objetivo 1 parte de esta base construida para integrar los sensores (IMU, celda de carga), e incluye tanto adaptadores/soportes externos como, de ser necesario, modificaciones a la estructura existente según lo requiera la integración final.
 
 <table>
 <tr>
