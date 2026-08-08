@@ -35,7 +35,7 @@
 | A2: Síntesis vs. objetivos | OE1-OE4 | Tabla que cruza el estado del arte con los 4 objetivos específicos | Brecha central identificada: ningún sistema revisado integra plataforma + sensórica + software + validación normativa de bajo costo |
 | A3: Requerimientos técnicos preliminares | OE1-OE4 | Especificaciones orientativas por área (mecánica, sensórica, software, validación) | Sección de requerimientos técnicos, con aclaración de que el sensado será continuo, sin lazo de control en tiempo real |
 | A4: Verificación normativa ISO 10328 | OE4 | Contraste contra fuentes primarias de los rangos de fuerza que exige la norma según el peso simulado del usuario | Niveles de carga más relevantes confirmados; los de pesos menos comunes quedan pendientes |
-| A5: Aclaración sobre el simulador existente | OE1 | Revisión de fotos del simulador físico y conversación con un compañero de laboratorio sobre su alcance protésico | Ya existe una estructura base construida y el simulador es transtibial únicamente (informal, pendiente confirmación del asesor) |
+| A5: Entendimiento del simulador existente | OE1 | Revisión de fotos del simulador físico y conversación con un compañero de laboratorio sobre su alcance protésico | Ya existe una estructura base construida y el simulador es transtibial únicamente (informal, pendiente confirmación del asesor) |
 
 **Situaciones surgidas en el desarrollo del proyecto**
 
@@ -43,4 +43,4 @@
 | :---- | :---- | :---- | :---- |
 | E1: Acceso a la norma ISO 10328 (documento de pago, no disponible vía INACAL ni otras fuentes institucionales) | 05/08/2026 | A4: Verificación normativa | Verificación indirecta contra papers que citan la norma; se sigue buscando acceso institucional |
 | E2: Problema de acceso al sistema de bibliotecas de la PUCP con la cuenta del alumno | 07/08/2026 | A1, A4 | Pendiente de resolver con la biblioteca |
-| E3: Aclaración sobre el simulador existente | 07/08/2026 | A1: Revisión del estado del arte | Documentado en la revisión bibliográfica; confirmación informal, pendiente validar con el asesor |
+| E3: Entendimiento del simulador existente | 07/08/2026 | A1: Revisión del estado del arte | Documentado en la revisión bibliográfica; confirmación informal, pendiente validar con el asesor |
