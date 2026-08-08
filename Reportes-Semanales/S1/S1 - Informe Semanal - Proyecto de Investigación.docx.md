@@ -8,7 +8,7 @@
 
 **1. Resumen Ejecutivo**
 
-Durante la primera semana del proyecto se realizó la revisión del estado del arte correspondiente a las semanas 1-2 del cronograma (8 bloques temáticos, 39 referencias en formato IEEE) y se derivaron requerimientos técnicos preliminares para las 4 áreas del proyecto. Se verificaron los valores numéricos de la norma ISO 10328 contra fuentes primarias (P4 y P5 confirmados; P3 y P6 quedan pendientes) y se corrigieron 7 de las 11 referencias bibliográficas que estaban incompletas. Además, se confirmó que ya existe una estructura mecánica base construida en el laboratorio y que el simulador es transtibial únicamente (no multi-protésico, aunque sí permite ajustar el nivel de amputación simulado). Esto no cambia el Objetivo 1, pero sí el punto de partida del diseño mecánico: no se parte de cero, y es posible que se requiera modificar o rediseñar partes de la estructura existente para integrar los nuevos sensores. Queda pendiente confirmarlo formalmente con el asesor.
+Durante la primera semana del proyecto se realizó una revisión del estado del arte de alrededor de 40 referencias en formato IEEE, cubriendo los principales bloques temáticos del proyecto, y se derivaron requerimientos técnicos preliminares para sus 4 áreas. Se verificaron los valores normativos clave de la ISO 10328 contra fuentes primarias y se corrigieron varias referencias bibliográficas que estaban incompletas. También se trabajó en entender el funcionamiento, el alcance y las limitantes del simulador ya existente en el laboratorio, conversando con un compañero de laboratorio, lo que ayudó a definir mejor el alcance real del proyecto. Queda pendiente confirmar este alcance formalmente con el asesor.
 
 **2. Actividades Realizadas**
 
