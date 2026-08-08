@@ -41,6 +41,6 @@
 
 | Eventos | Fecha de Ocurrencia | Actividad Afectada | Acciones Tomadas |
 | :---- | :---- | :---- | :---- |
-| E1: Acceso a la norma ISO 10328 (documento de pago, no disponible vía INACAL ni otras fuentes institucionales) | 05/08/2026 | A4: Verificación normativa | Verificación indirecta contra papers que citan la norma; se sigue buscando acceso institucional |
-| E2: Problema de acceso al sistema de bibliotecas de la PUCP con la cuenta del alumno | 07/08/2026 | A1, A4 | Pendiente de resolver con la biblioteca |
+| E1: Norma ISO 10328 es un documento de pago | 05/08/2026 | A4: Verificación normativa | Se intentó acceso institucional vía INACAL y otras fuentes, sin éxito; verificación indirecta contra papers que citan la norma |
+| E2: Problema de acceso al sistema de bibliotecas PUCP | 07/08/2026 | A1, A4 | Pendiente de resolver con la biblioteca |
 | E3: Entendimiento del simulador existente | 07/08/2026 | A1: Revisión del estado del arte | Documentado en la revisión bibliográfica; confirmación informal, pendiente validar con el asesor |
