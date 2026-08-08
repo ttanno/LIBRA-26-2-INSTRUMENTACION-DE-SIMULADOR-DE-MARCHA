@@ -38,7 +38,7 @@ Durante la primera semana del proyecto se realizó una revisión del estado del 
 
 **Acceso a la norma ISO 10328.** Es un documento de pago; no se consiguió vía INACAL ni otras fuentes institucionales. Los valores de carga se verificaron de forma indirecta, contra papers que citan la norma. Se seguirá buscando acceso institucional.
 
-**Problema de acceso al sistema de bibliotecas.** Por razones aún no identificadas, no fue posible acceder al sistema de bibliotecas de la PUCP con la cuenta del alumno en los últimos días (particularmente el viernes 07/08). Limita el acceso a fuentes indexadas. Pendiente de resolver con la biblioteca.
+**Suspensión del sistema de bibliotecas por matrícula.** El Sistema de Bibliotecas de la PUCP suspendió el acceso a bases de datos y el servicio de préstamo desde el 4 de agosto, por el proceso de matrícula 2026-2. Limita el acceso a fuentes indexadas hasta que se restablezca el jueves 13 de agosto.
 
 **Metadatos web incompletos en fuentes académicas.** Los metadatos de algunas páginas web no incluyen todos los autores de un artículo, con riesgo de citar mal la autoría. Se verificó contra el texto completo del PDF en los casos con duda.
 

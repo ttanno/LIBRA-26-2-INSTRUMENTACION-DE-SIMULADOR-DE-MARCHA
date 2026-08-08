@@ -42,5 +42,5 @@
 | Eventos | Fecha de Ocurrencia | Actividad Afectada | Acciones Tomadas |
 | :---- | :---- | :---- | :---- |
 | E1: Norma ISO 10328 es un documento de pago | 05/08/2026 | A4: Verificación normativa | Se intentó acceso institucional vía INACAL y otras fuentes, sin éxito; verificación indirecta contra papers que citan la norma |
-| E2: Problema de acceso al sistema de bibliotecas PUCP | 07/08/2026 | A1, A4 | Pendiente de resolver con la biblioteca |
+| E2: Suspensión del sistema de bibliotecas PUCP por matrícula | 04/08/2026 | A1, A4 | Confirmado con la biblioteca: acceso suspendido por matrícula 2026-2; se restablece el 13/08/2026 |
 | E3: Entendimiento del simulador existente | 07/08/2026 | A1: Revisión del estado del arte | Documentado en la revisión bibliográfica; confirmación informal, pendiente validar con el asesor |
