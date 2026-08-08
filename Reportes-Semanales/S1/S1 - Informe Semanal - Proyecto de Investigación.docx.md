@@ -44,7 +44,7 @@ Durante la primera semana del proyecto se realizó una revisión del estado del 
 
 **5. Lecciones Aprendidas / Recomendaciones**
 
-Es indispensable verificar los valores numéricos de normas técnicas contra fuentes primarias (o secundarias que citen textualmente la norma con permiso de reproducción) antes de utilizarlos en decisiones de diseño. De forma similar, los metadatos de una página web no son suficientes para verificar autoría de una referencia — el texto completo del PDF puede revelar información distinta (como ocurrió con [31], que tiene 4 autores y no 1). También quedó claro que antes de planificar actividades de diseño mecánico conviene verificar el estado real del equipo físico disponible en el laboratorio: de no haberse revisado las fotos del simulador, se habría planificado erróneamente el diseño de una estructura que ya existe. Para las próximas semanas, se recomienda obtener la confirmación formal del asesor sobre el estado del simulador existente antes de avanzar en el diseño de los soportes de sensores.
+Conviene verificar siempre contra fuentes primarias, tanto los valores numéricos de normas técnicas como la autoría de las referencias — los metadatos web y resúmenes de terceros pueden ser incompletos o incorrectos. También quedó claro que antes de planificar el diseño mecánico conviene verificar primero el estado real del equipo disponible en el laboratorio, para no planificar sobre supuestos incorrectos. Se recomienda obtener la confirmación formal del asesor sobre el estado del simulador antes de avanzar en el diseño de los soportes de sensores.
 
 **6. Actividades Planificadas para la Siguiente Semana**
 
