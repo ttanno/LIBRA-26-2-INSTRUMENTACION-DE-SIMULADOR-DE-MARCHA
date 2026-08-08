@@ -36,11 +36,11 @@ Durante la primera semana del proyecto se realizó una revisión del estado del 
 
 **4. Dificultades o Problemas Presentados**
 
-**Acceso a la norma ISO 10328.** Causa probable: es un documento de pago; se intentó conseguirla vía INACAL y otras fuentes institucionales, pero no está disponible en ninguna de ellas. Impacto: los valores de carga se verificaron de forma indirecta, contra papers que citan la norma, no contra el documento original. Acción correctiva: seguir buscando acceso institucional; mientras tanto, priorizar fuentes que citen textualmente la norma vigente.
+**Acceso a la norma ISO 10328.** Es un documento de pago; no se consiguió vía INACAL ni otras fuentes institucionales. Los valores de carga se verificaron de forma indirecta, contra papers que citan la norma. Se seguirá buscando acceso institucional.
 
-**Problema de acceso al sistema de bibliotecas.** Causa probable: no identificada — en los últimos días (particularmente el viernes 07/08) no fue posible acceder al sistema de bibliotecas de la PUCP con la cuenta del alumno. Impacto: limita el acceso a fuentes indexadas y a la norma ISO por canales institucionales. Acción correctiva: pendiente de resolver con la biblioteca.
+**Problema de acceso al sistema de bibliotecas.** Por razones aún no identificadas, no fue posible acceder al sistema de bibliotecas de la PUCP con la cuenta del alumno en los últimos días (particularmente el viernes 07/08). Limita el acceso a fuentes indexadas. Pendiente de resolver con la biblioteca.
 
-**Metadatos web incompletos en fuentes académicas.** Causa probable: la vista previa/metadatos de una página web de un artículo no siempre incluye la lista completa de autores (solo el autor de correspondencia), como ocurrió con la referencia [31]. Impacto: riesgo de citar mal la autoría si no se verifica contra el texto completo. Acción correctiva: para referencias marcadas como inciertas, se descargó y leyó el texto completo del PDF en vez de confiar solo en los metadatos de la página.
+**Metadatos web incompletos en fuentes académicas.** Los metadatos de algunas páginas web no incluyen todos los autores de un artículo, con riesgo de citar mal la autoría. Se verificó contra el texto completo del PDF en los casos con duda.
 
 **5. Lecciones Aprendidas / Recomendaciones**
 
