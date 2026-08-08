@@ -51,7 +51,10 @@ Es indispensable verificar los valores numéricos de normas técnicas contra fue
 | Actividad | Objetivo |
 | :---- | :---- |
 | Confirmar formalmente con el asesor el estado del simulador existente (estructura base ya construida, transtibial únicamente) | Evitar retrabajo y alinear expectativas antes de diseñar soportes de sensores |
-| Diseñar los soportes/adaptadores de montaje para IMU y celda de carga sobre la plataforma existente | Objetivo específico 1 y 2 |
+| Definir el diagrama de bloques del sistema (arquitectura general: sensores, procesamiento, adquisición) | Objetivo específico 1, 2 y 3 |
+| Seleccionar el sensor de IMU y de celda de carga más adecuados para el propósito (sin sobre-especificar) y definir dónde se montará cada uno sobre la plataforma | Objetivo específico 1 y 2 |
+| Definir el material de absorción de impacto para la fase de apoyo (resistencia vs. elasticidad; la plataforma actual usa TPU) | Objetivo específico 1 |
+| Elaborar un boceto de la ubicación de cada componente (sensores, procesador, etc.) sobre la plataforma | Objetivo específico 1 y 2 |
 | Completar las referencias bibliográficas pendientes ([2], [4], [12], [15]) y decidir si se incorpora el método de marcadores M1-M4 al protocolo de validación | Dejar la revisión bibliográfica y el protocolo de validación (Objetivo 4) listos para el informe final |
 
 **7. Anexos o Evidencias**
