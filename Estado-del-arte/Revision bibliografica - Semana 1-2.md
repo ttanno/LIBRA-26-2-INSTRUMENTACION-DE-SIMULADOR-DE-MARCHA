@@ -156,9 +156,9 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 - **Aplicación real de validación cruzada simulador–sujeto humano.** Usaron el simulador para validar una rodilla protésica policéntrica propia (IITM Polycentric Knee, IPK) — específicamente para confirmar que la rodilla se extiende sin necesidad de un resorte de asistencia a la extensión durante el balanceo (*swing phase*). Luego, con 3 sujetos que usan prótesis pasivas regularmente, compararon marcha real (con su prótesis habitual y con la IPK) contra las predicciones del simulador, encontrando correlación amplia entre ambos.
 - **Por qué importa para este proyecto:** es el ejemplo más cercano encontrado de un protocolo de validación de dos niveles — (1) simulador vs. modelo/hipótesis de diseño, (2) simulador vs. sujetos humanos reales — que es exactamente el tipo de protocolo que el Objetivo 4 de este proyecto necesita definir para la plataforma instrumentada, sustituyendo la validación con sujetos humanos por una validación cruzada IMU/celda de carga vs. posición controlada del motor/encoder (ver Sección 10, Validación).
 
-### 8.1. Alcance protésico del simulador existente — confirmado
+### 8.1. Alcance protésico del simulador existente
 
-> **Confirmado 07/08/2026, vía conversación con Luis Plasencia (compañero de laboratorio):** el simulador **es transtibial únicamente**, no multi-protésico. Sí permite ajustar el nivel de amputación simulado (longitud del segmento tibial residual: alto, medio o bajo). No es una confirmación formal del asesor (Dante Elias) — si se necesita para el informe final o para justificar el objetivo 1 ante el curso, conviene pedirle la confirmación explícita a él también.
+> **Contexto:** el simulador es transtibial únicamente, no multi-protésico. Sí permite ajustar el nivel de amputación simulado (longitud del segmento tibial residual: alto, medio o bajo). Confirmado informalmente por un compañero de laboratorio; pendiente confirmación formal del asesor (Dante Elias).
 
 ### 8.2. Método de referencia cinemática por marcadores
 
