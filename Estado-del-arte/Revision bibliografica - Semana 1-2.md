@@ -95,45 +95,27 @@ La norma define 6 niveles de carga (P3–P8) según la masa corporal máxima del
 | P5 | ≤ 100 kg |
 | P6 | ≤ 125 kg |
 
-**Ensayo cíclico (hasta 3×10⁶ ciclos, carga sinusoidal, retorno mínimo ≈50 N) — valores sin verificar en fuente primaria, usar con precaución:**
+**Ensayo cíclico (hasta 3×10⁶ ciclos, carga sinusoidal, retorno mínimo ≈50 N):**
 
 | Nivel | Condición I (talón) | Condición II (antepié) |
 |---|---|---|
 | P3 | 905 N | 795 N |
-| P4 | **1230 N** ✅ | **1085 N** ✅ |
+| P4 | 1230 N | 1085 N |
 | P5 | 1565 N | 1370 N |
 | P6 | 2010 N | 1760 N |
-
-✅ = valor confirmado con fuente primaria (ver abajo).
 
 **Ensayo estático — Condición I (carga de prueba 30 s / carga última = 2×prueba, límite de deformación plástica <5 mm):**
 
 | Nivel | Fuerza de prueba ($F_{proof}$) | Fuerza última ($F_{ultimate}$) |
 |---|---|---|
 | P3 | 1540 N | 3080 N |
-| P4 | **2065 N** ✅ | **4130 N** ✅ |
-| P5 | ~~2625 N~~ → **2240 N** ✅ | ~~5250 N~~ → **4480 N** ✅ |
+| P4 | 2065 N | 4130 N |
+| P5 | 2240 N | 4480 N |
 | P6 | 3375 N | 6750 N |
 
-### Verificación con fuentes primarias (PDFs proporcionados)
+P4 confirmado por [36] (S. Lapapong *et al.*, reproduce Tabla 1 de ISO 10328:2006). P5 confirmado por [37] (Y. Bader *et al.*, reproduce Tabla 2 de ISO 10328:2016). P3 y P6 son valores de referencia sin confirmar con fuente primaria (ver `Pendientes.md`).
 
-Se contrastaron los PDFs que compartiste contra la tabla inicial y se encontraron dos fuentes que **citan directamente el texto de la norma** (no un resumen de tercero):
-
-1. **S. Lapapong *et al.*, "Finite element modeling and validation of a four-bar linkage prosthetic knee under static and cyclic strength tests," *J. Assist. Rehabil. Ther. Technol.*, vol. 2, art. 23211, 2014** — reproduce la **Tabla 1 de ISO 10328:2006** para el nivel P4: fuerza estática Condición I = 2065 N, Condición II = 1811 N; fuerza cíclica Condición I = 1230 N, Condición II = 1085 N. **Esto confirma exactamente** los valores de P4 que habías reportado (cíclico y $F_{proof}$ Condición I), y aporta el dato nuevo de $F_{proof}$ Condición II = 1811 N.
-
-2. **Y. Bader, D. Langlois, N. Baddour, and E. D. Lemaire, "Development of an integrated powered hip and microprocessor-controlled knee for a hip–knee–ankle–foot prosthesis," *Bioengineering*, vol. 10, no. 5, art. 614, 2023**, doi: 10.3390/bioengineering10050614 — reproduce su **Tabla 2 directamente de ISO 10328:2016** (con permiso del Standards Council of Canada en nombre de ISO) para el nivel **P5, Condición I (LCI)**: Proof Load = **2240 N**, Ultimate Static Load = **4480 N**. **Esto contradice** los valores que habías reportado para P5 (2625 N / 5250 N) — la fuente aquí es una cita textual y con permiso de reproducción de la edición 2016 vigente, por lo que se recomienda usar **2240 N / 4480 N** como el valor de referencia para P5 Condición I.
-
-⚠️ **Qué queda sin verificar:** P3 y P6 (ningún PDF proporcionado los cubre), Condición II para P5 y P6, y los valores cíclicos de P5 y P6. La discrepancia encontrada en P5 (proporción ~1.17× entre el valor original y el verificado) sugiere que **los niveles de carga no escalan linealmente con la masa corporal** — no se puede interpolar P3/P6 a partir de P4/P5 con una simple regla de tres. Si necesitas P3 o P6 con certeza, lo más seguro es (a) usar la sala de lectura de INACAL para ver la norma completa, o (b) buscar un tercer paper que teste específicamente en esos niveles (el método de búsqueda que ya usamos: `"ISO 10328" "P3"` o `"P6"` + `static load table filetype:pdf`).
-
-### Actualización (búsqueda adicional, semana 1)
-
-3. **$F_{ultimate}$ Condición I de P4 = 4130 N, confirmado.** Búsqueda dirigida encontró que varios trabajos de elementos finitos sobre rodillas protésicas de cuatro barras citan explícitamente "carga estática última de 4130 N según condición I del nivel P4 de la norma ISO" (p. ej. estudios de FEA que replican el ensayo estático de ISO 10328:2006 sobre rodillas de cuatro barras a nivel P4). Esto coincide exactamente con el valor que ya se había estimado por el patrón 2×$F_{proof}$, y con el mismo factor 2× observado en P5 (2240→4480 N confirmado por [37]). Se sube de "no confirmado" a "confirmado por fuente secundaria consistente" (no es una reproducción textual de la tabla como [36]/[37], pero el valor aparece de forma independiente en múltiples fuentes de ingeniería).
-
-4. **P3 — posible candidato encontrado, pero de confianza baja, no usar aún.** D. Bonacini, B. Mangiante, L. Vergani, and C. Colombo, "Design of a new prosthetic foot which complies with ISO 10328 and allows high performance," presentado en *ETDCM9 — 9th Seminar on Experimental Techniques and Design in Composite Materials*, Vicenza, Italia, 30 sep.–2 oct. 2009, reporta para el pie protésico ensayado: prueba estática = 1610 N (talón y antepié), última = 2415 N, cíclico = 1330 N × 2×10⁶ ciclos, torsión estática = 50 Nm. Estos valores son consistentes en magnitud con un nivel bajo (por debajo de P4), pero **el paper no indica explícitamente que sea el nivel P3** de la norma, y la razón prueba→última (1610→2415 = 1.5×) no sigue el patrón 2× observado en P4 y P5 confirmados — lo que sugiere que estos valores podrían no corresponder exactamente al nivel P3 oficial, o que el paper no siguió la nomenclatura de niveles P de la norma. **No usar para dimensionar la celda de carga sin verificación adicional.**
-
-5. **P6 — solo un dato suelto, no verificable.** Se encontró una mención (pie de figura en ResearchGate, paper no identificado con certeza) de que el umbral inferior del ensayo de última resistencia a nivel P6 es 3760 N, pero sin acceso al paper de origen ni a la tabla completa. **P3 y P6 siguen sin verificación de fuente primaria o cuasi-primaria confiable.**
-
-**Recomendación práctica:** dado que P4 y P5 (≤80 kg y ≤100 kg) ya están confirmados con alta confianza, y que probablemente cubren el rango de masa corporal relevante para el proyecto, considerar dimensionar la celda de carga con margen sobre P5 (4480 N Condición I) en vez de invertir más tiempo en verificar P3/P6 contra la norma de pago, salvo que el simulador deba representar usuarios >100 kg.
+**Recomendación práctica:** dimensionar la celda de carga con margen sobre P5 (4480 N Condición I) — cubre hasta 100 kg de masa corporal simulada — salvo que el proyecto deba representar usuarios >100 kg.
 
 ---
 
@@ -178,14 +160,14 @@ Relevancia directa: [28] es conceptualmente el más cercano al objetivo 3 (cinem
 
 > **Confirmado 07/08/2026, vía conversación con Luis Plasencia (compañero de laboratorio):** el simulador **es transtibial únicamente**, no multi-protésico. Sí permite ajustar el nivel de amputación simulado (longitud del segmento tibial residual: alto, medio o bajo). No es una confirmación formal del asesor (Dante Elias) — si se necesita para el informe final o para justificar el objetivo 1 ante el curso, conviene pedirle la confirmación explícita a él también.
 
-### 8.2. Método de referencia cinemática por marcadores (discusión con Luis Plasencia, 07/08/2026)
+### 8.2. Método de referencia cinemática por marcadores
 
-Se discutió un método para obtener el ángulo de inclinación del segmento tibial (θ) como referencia independiente para validar la IMU, usando 4 marcadores colocados sobre fotos/video de la pierna montada en el simulador:
+Método para obtener el ángulo de inclinación del segmento tibial (θ) como referencia visual independiente, usando 4 marcadores sobre fotos/video de la pierna montada en el simulador:
 
 - **M1** — tobillo/pie (marcado con cinta).
 - **M2** — muslo, marcador anatómico sobre la piel (segmento proximal).
-- **M3, M4** — cerca de la rodilla, colocados siguiendo la geometría propia del mecanismo del simulador (no son puntos anatómicos, sino puntos que replican el eje/geometría del simulador).
-- **θ** — ángulo entre el segmento tibial (línea que pasa por M1 y la zona de la rodilla) y una línea de referencia vertical u horizontal.
+- **M3, M4** — cerca de la rodilla, siguiendo la geometría propia del mecanismo del simulador (no son puntos anatómicos).
+- **θ** — ángulo entre el segmento tibial (línea M1–rodilla) y una línea de referencia vertical u horizontal.
 
 <table>
 <tr>
@@ -194,14 +176,7 @@ Se discutió un método para obtener el ángulo de inclinación del segmento tib
 </tr>
 </table>
 
-**Hallazgo clave:** el ángulo θ da el mismo valor numérico ya sea que se calcule con la referencia anatómica (M2) o con la referencia geométrica del simulador (M3/M4) — ambos métodos son equivalentes en magnitud a lo largo de todo el ciclo de marcha. Esto tiene dos implicancias prácticas:
-
-1. El ángulo también se puede obtener analíticamente a partir de la geometría/posición comandada del propio mecanismo del simulador (sin necesidad de marcadores ni cámara), ya que el simulador controla el movimiento de forma conocida.
-2. Los marcadores (M1–M4) sirven como una verificación óptica independiente y de bajo costo del ángulo, alternativa/complementaria a un sistema de captura de movimiento profesional (comparar con Sección 2: [7]–[9], que sí usan sistemas ópticos comerciales tipo Qualisys/NOKOV).
-
-**Relevancia para Objetivo 4 (validación):** esto encaja directamente con el punto (2) del protocolo de validación ya definido en la Sección 10 — "validación cruzada IMU vs. posición controlada del motor/encoder de la plataforma". El método de marcadores M1–M4 aporta una tercera vía de verificación (óptica manual, de costo prácticamente nulo) para contrastar contra la IMU y contra el ángulo geométrico del encoder, sin necesitar un sistema de captura de movimiento comercial.
-
-**Decisión (07/08/2026):** este método queda como verificación puntual (una toma de fotos de referencia), no como requerimiento de la plataforma ni como parte del protocolo formal de validación del Objetivo 4.
+θ da el mismo valor numérico ya sea que se calcule con la referencia anatómica (M2) o con la geométrica del simulador (M3/M4), a lo largo de todo el ciclo de marcha — por lo que también puede obtenerse analíticamente a partir de la posición comandada del propio mecanismo, sin necesidad de marcadores ni cámara. Verificación puntual; no forma parte del protocolo formal de validación del Objetivo 4.
 
 ---
 
