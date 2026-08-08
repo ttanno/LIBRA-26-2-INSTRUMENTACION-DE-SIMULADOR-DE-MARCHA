@@ -36,7 +36,9 @@ Durante la primera semana del proyecto se realizó una revisión del estado del 
 
 **4. Dificultades o Problemas Presentados**
 
-**Norma ISO 10328 es un documento de pago con valores discrepantes entre fuentes secundarias.** Causa probable: la norma es un documento de pago (ISO Store), y distintos papers reportan valores de carga para componentes distintos (socket vs. rodilla vs. pilón) o ediciones distintas de la norma (2006 vs. 2016). Impacto: riesgo de dimensionar la celda de carga con un valor incorrecto. Acción correctiva: acceso institucional gratuito vía sala de lectura virtual de Normas Técnicas Peruanas (INACAL, biblioteca PUCP), priorizando fuentes que citan textualmente la norma vigente (2016) sobre resúmenes de terceros.
+**Acceso a la norma ISO 10328.** Causa probable: es un documento de pago; se intentó conseguirla vía INACAL y otras fuentes institucionales, pero no está disponible en ninguna de ellas. Impacto: los valores de carga se verificaron de forma indirecta, contra papers que citan la norma, no contra el documento original. Acción correctiva: seguir buscando acceso institucional; mientras tanto, priorizar fuentes que citen textualmente la norma vigente.
+
+**Problema de acceso al sistema de bibliotecas.** Causa probable: no identificada — en los últimos días (particularmente el viernes 07/08) no fue posible acceder al sistema de bibliotecas de la PUCP con la cuenta del alumno. Impacto: limita el acceso a fuentes indexadas y a la norma ISO por canales institucionales. Acción correctiva: pendiente de resolver con la biblioteca.
 
 **Metadatos web incompletos en fuentes académicas.** Causa probable: la vista previa/metadatos de una página web de un artículo no siempre incluye la lista completa de autores (solo el autor de correspondencia), como ocurrió con la referencia [31]. Impacto: riesgo de citar mal la autoría si no se verifica contra el texto completo. Acción correctiva: para referencias marcadas como inciertas, se descargó y leyó el texto completo del PDF en vez de confiar solo en los metadatos de la página.
 
