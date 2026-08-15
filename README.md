@@ -48,7 +48,7 @@ LIBRA/
 │   ├── SENSORES DE FUERZA/             Celdas de carga, strain gauges, sensores magnéticos
 │   ├── SIMULADOR DE MARCHA/            Diseño mecánico de plataformas y bancos de prueba
 │   ├── SOFTWARE/                       Arquitecturas de software embebido multi-sensor
-│   └── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (39 referencias, formato IEEE)
+│   └── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (40 referencias, formato IEEE)
 ├── Evidencias/                         Fotos propias del equipo de laboratorio (no bibliográficas, reutilizables entre semanas)
 │   └── simulador/                      Simulador físico existente y método de marcadores M1-M4
 ├── Reportes-Semanales/                 Informes y reportes de avance, por semana
@@ -73,6 +73,8 @@ La [revisión bibliográfica](./Estado-del-arte/Revision%20bibliografica%20-%20S
 - Normas ISO de ensayo estructural de prótesis (ISO 10328, ISO 22675, ISO 7500-1)
 - Arquitecturas de software para adquisición sincronizada multi-sensor
 - Diseño mecánico de plataformas móviles y bancos de prueba
+- Arquitectura electrónica de referencia y ubicación del sensor de fuerza (interfaz pylon–plataforma)
+- Taxonomía de principios físicos de sensado de fuerza (strain gauge, magnético, capacitivo, FSR, piezoeléctrico, F/T comercial)
 
 Cada referencia está trazada a su fuente y marcada según su nivel de verificación (confirmada por fuente primaria, corroboración cruzada, o pendiente de verificar). El documento incluye además una síntesis por objetivo específico y la brecha que justifica el proyecto.
 
@@ -89,7 +91,7 @@ Resumen de los requerimientos definidos a partir del estado del arte (detalle co
 | Componente | Requerimiento orientativo |
 |---|---|
 | **IMU** | Sensor MEMS de bajo costo (MPU6050 / ICM-20948), muestreo ≥100 Hz, error objetivo <5° con calibración automática sensor-a-segmento |
-| **Celda de carga** | Rango dimensionado sobre ISO 10328 nivel P5 (≤100 kg): proof load 2240 N, ultimate 4480 N; no linealidad objetivo <8% |
+| **Celda de carga** | Rango dimensionado sobre ISO 10328 nivel P5 (≤100 kg): proof load 2240 N, ultimate 4480 N; no linealidad objetivo <8%. Ubicación: interfaz pylon–plataforma (no socket, no suelo). Candidata inicial de 1 eje (tipo TAL107F), con upgrade path a 3–6 ejes si se necesita momento |
 | **Software** | Adquisición continua por timestamp compartido, I2C/SPI + ADC dedicado, arquitectura modular para agregar sensores sin rediseño |
 | **Validación** | Calibración estática/dinámica trazable (ISO 7500-1) + validación cruzada IMU vs. encoder de la plataforma, referenciada a ISO 22675 |
 </content>
