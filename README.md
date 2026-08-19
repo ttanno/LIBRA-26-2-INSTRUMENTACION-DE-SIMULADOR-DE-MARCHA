@@ -8,7 +8,7 @@
 | **Institución** | Pontificia Universidad Católica del Perú (PUCP) |
 | **Alumno** | Alessandro Jesus Felix Tello |
 | **Asesor** | Dante Angel Elias Giordano |
-| **Estado** | En curso — revisión del estado del arte y definición de requerimientos |
+| **Estado** | En curso — Semana 3: diseño mecánico y selección de sensores. Prioridad en discusión entre asesoría (ver nota en [Reportes-Semanales/S3/Pendientes.md](./Reportes-Semanales/S3/Pendientes.md)) |
 
 ---
 
@@ -17,6 +17,7 @@
 - [Descripción del proyecto](#descripción-del-proyecto)
 - [Objetivos específicos](#objetivos-específicos)
 - [Alcance](#alcance)
+- [Nota de prioridad (Semana 3)](#nota-de-prioridad-semana-3)
 - [Estructura del repositorio](#estructura-del-repositorio)
 - [Estado del arte](#estado-del-arte)
 - [Reportes semanales](#reportes-semanales)
@@ -39,24 +40,37 @@ En el laboratorio ya existe una plataforma mecánica de simulación de marcha (t
 
 La plataforma **sensa de forma continua** (registro/visualización) durante el uso de la prótesis en la simulación. **No** implementa un lazo de control en tiempo real (p. ej. un PID que retroalimente al simulador con los datos del sensor); esto queda como trabajo futuro. Esta distinción simplifica los requerimientos de software: no se exige baja latencia de lazo cerrado, solo sensado sincronizado y confiable.
 
+## Nota de prioridad (Semana 3)
+
+En la Semana 2, el asesor Dante confirmó una arquitectura de sensado por grado de libertad, con la fuerza de reacción del suelo (GRF, vía la plataforma AMTI BP400600 ya disponible en el laboratorio) como **prioridad**, y la celda de carga en la interfaz pylon–plataforma como **secundaria**. Entrando a la Semana 3 surgió una indicación en sentido contrario por parte de la co-asesora Victoria, de priorizar el pylon. Ambas líneas de trabajo se mantienen documentadas (`Estado-del-arte/SENSORES DE FUERZA/GRF-AMTI/` y `.../PYLON/`); el detalle y la decisión final quedan en [`Reportes-Semanales/S3/Pendientes.md`](./Reportes-Semanales/S3/Pendientes.md).
+
 ## Estructura del repositorio
 
 ```
 LIBRA/
 ├── Estado-del-arte/                    Fichas de lectura, fuentes primarias (PDF) y la síntesis bibliográfica
 │   ├── ISO/                            Normas y ensayos estructurales de prótesis
-│   ├── SENSORES DE FUERZA/             Celdas de carga, strain gauges, sensores magnéticos
+│   ├── SENSORES DE FUERZA/
+│   │   ├── PYLON/                      Celda de carga en la interfaz pylon-plataforma: strain gauge, sensor magnético, comparativa de candidatas
+│   │   └── GRF-AMTI/                   Plataforma de fuerza AMTI BP400600 (manuales, pinout, integración)
 │   ├── SIMULADOR DE MARCHA/            Diseño mecánico de plataformas y bancos de prueba
 │   ├── SOFTWARE/                       Arquitecturas de software embebido multi-sensor
-│   └── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (40 referencias, formato IEEE)
+│   ├── Revision bibliografica - Semana 1-2.md   Revisión bibliográfica consolidada (40 referencias, formato IEEE)
+│   └── Sensores-LIBRA-Presentacion.pptx         Comparativa de sensores de fuerza, distancia y ángulo (soporte visual)
 ├── Evidencias/                         Fotos propias del equipo de laboratorio (no bibliográficas, reutilizables entre semanas)
-│   └── simulador/                      Simulador físico existente y método de marcadores M1-M4
+│   ├── simulador/                      Simulador físico existente y método de marcadores M1-M4
+│   └── arquitectura-sensores-AMTI-S2.png   Diagrama de arquitectura de sensores por DOF (Semana 2)
 ├── Reportes-Semanales/                 Informes y reportes de avance, por semana
 │   ├── S1/
 │   │   ├── S1 - Informe Semanal...     Informe semanal (formato PUCP)
 │   │   ├── S1 - Reporte de Avance...   Reporte de avance (formato PUCP)
-│   │   └── Pendientes.md               Lista de trabajo de esa semana (buscar / editar / sintetizar / borrar); se actualiza semana a semana
-│   └── S2/
+│   │   └── Pendientes.md               Lista de trabajo de la S1 (cerrada; ítems abiertos trasladados a S3)
+│   ├── S2/
+│   │   ├── S2 - Informe Semanal...
+│   │   ├── S2 - Reporte de Avance...
+│   │   └── Resumen-Semana2.md          Resumen narrativo de la S2 (arquitectura por DOF, integración AMTI)
+│   └── S3/
+│       └── Pendientes.md               Lista de trabajo activa (se actualiza semana a semana)
 ├── Plan de trabajo 1_DPB4 - Proyecto Simulador de marcha (2).pdf
 └── README.md
 ```
@@ -91,7 +105,8 @@ Resumen de los requerimientos definidos a partir del estado del arte (detalle co
 | Componente | Requerimiento orientativo |
 |---|---|
 | **IMU** | Sensor MEMS de bajo costo (MPU6050 / ICM-20948), muestreo ≥100 Hz, error objetivo <5° con calibración automática sensor-a-segmento |
-| **Celda de carga** | Rango dimensionado sobre ISO 10328 nivel P5 (≤100 kg): proof load 2240 N, ultimate 4480 N; no linealidad objetivo <8%. Ubicación: interfaz pylon–plataforma (no socket, no suelo). Candidata inicial de 1 eje (tipo TAL107F), con upgrade path a 3–6 ejes si se necesita momento |
+| **Celda de carga (pylon)** | Rango dimensionado sobre ISO 10328 nivel P5 (≤100 kg): proof load 2240 N, ultimate 4480 N; no linealidad objetivo <8%. Ubicación: interfaz pylon–plataforma (no socket, no suelo), 1 eje axial. La candidata inicial (TAL107F-10kg) resultó subdimensionada — ver comparativa actualizada en [`Estado-del-arte/SENSORES DE FUERZA/PYLON/Comparativa-Sensores-Fuerza-Axial-Pylon.md`](./Estado-del-arte/SENSORES%20DE%20FUERZA/PYLON/Comparativa-Sensores-Fuerza-Axial-Pylon.md) |
+| **Plataforma GRF (AMTI)** | AMTI BP400600 ya disponible en el laboratorio; lectura en tiempo real por salida analógica DB25S (Fx,Fy,Fz,Mx,My,Mz) hacia el mismo ADC (ADS1256), en paralelo a la celda de carga |
 | **Software** | Adquisición continua por timestamp compartido, I2C/SPI + ADC dedicado, arquitectura modular para agregar sensores sin rediseño |
 | **Validación** | Calibración estática/dinámica trazable (ISO 7500-1) + validación cruzada IMU vs. encoder de la plataforma, referenciada a ISO 22675 |
 </content>

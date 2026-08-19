@@ -1,4 +1,6 @@
-# Pendientes — Semana 1 (actualizado 11/08/2026, integración de referencias en la revisión bibliográfica)
+# Pendientes — Semana 1 (cerrado — archivo histórico)
+
+> **Archivo cerrado (19/08/2026).** Los ítems que seguían abiertos se trasladaron a [`Reportes-Semanales/S3/Pendientes.md`](../S3/Pendientes.md) (la S2 no generó su propio `Pendientes.md`, ver `Resumen-Semana2.md`). Este archivo se conserva tal cual como registro histórico de la S1 — no editar.
 
 Nota de trabajo informal (no es parte de los reportes formales), para triar qué buscar, editar, sintetizar o borrar. Referencias entre `[ ]` apuntan a `Estado-del-arte/Revision bibliografica - Semana 1-2.md` salvo que se indique otro archivo. Este archivo se actualiza cada semana; al cerrar la semana, copiar los pendientes que sigan abiertos al `Pendientes.md` de la semana siguiente.
 
