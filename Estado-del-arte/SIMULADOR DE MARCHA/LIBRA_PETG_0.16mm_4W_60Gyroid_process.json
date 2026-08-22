@@ -1,0 +1,17 @@
+{
+  "type": "process",
+  "name": "LIBRA PETG 0.16mm 4W 60% Gyroid @A1M",
+  "from": "User",
+  "inherits": "0.20mm Standard @BBL A1M",
+  "print_settings_id": "LIBRA PETG 0.16mm 4W 60% Gyroid @A1M",
+  "layer_height": "0.16",
+  "wall_loops": "4",
+  "top_shell_layers": "6",
+  "bottom_shell_layers": "6",
+  "sparse_infill_density": "60%",
+  "sparse_infill_pattern": "gyroid",
+  "outer_wall_speed": "45",
+  "inner_wall_speed": "50",
+  "sparse_infill_speed": "50",
+  "compatible_printers": ["Bambu Lab A1 mini 0.4 nozzle"]
+}
