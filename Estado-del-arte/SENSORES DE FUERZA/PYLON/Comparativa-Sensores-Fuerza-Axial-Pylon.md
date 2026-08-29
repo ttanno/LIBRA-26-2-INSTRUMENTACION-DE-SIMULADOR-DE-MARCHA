@@ -32,6 +32,8 @@
 |---|---|---|---|---|---|
 | **Transducer Techniques THA/THB (thru-hole/donut)** | THA: 50–500 lb (222–2224 N) / THB: 100–2000 lb (445–8896 N) | THA: Ø1.00" / THB: Ø1.50", acero inoxidable 17-4 PH | mV/V | US$590–630 (nuevo, precio de catálogo) | Diseño *donut*: el perno/varilla del pylon pasa por el centro y la fuerza se transmite por compresión entre dos placas — encaja bien con una interfaz de placa atornillada como la del simulador. |
 | **TE Connectivity / Measurement Specialties XFTC301 (roscado compacto)** | 500 N / 1000 N / 2000 N / 5000 N / 10000 N | Compacto, dos espárragos roscados (M) | ±10–15 mV/V según modelo | Sin precio público (verificar disponibilidad — la página indica "no disponible actualmente", contactar distribuidor) | El modelo de 5000 N da margen justo sobre la fuerza última P5 (4480 N); el de 2000 N cubre la fuerza de prueba (2240 N) casi al límite — mejor elegir el de 5000 N para no operar al borde del rango. |
+| **TE Connectivity FX1901-0001-0200-L (compression, referencia guardada 26/08)** | 200 lbf (~890 N) | OEM compression load cell, cuerpo compacto | 100 mV @ 5 VDC excitación (~20 mV/V) | US$ sin publicar — página TE indica "no disponible actualmente" | ±1% precisión. **Insuficiente para el ensayo P5 completo** (890 N < 2240 N de prueba, < 4480 N última) — mismo problema de subdimensionamiento que TAL107F, aunque con ~9× más margen. Podría alcanzar para el caso de carga puntual ~1200 N si se acepta operar sobre el 100% de su rango (no recomendable), pero no para el ensayo normativo. |
+| **TE Connectivity FC2211-0000-0100-L (compression, referencia guardada 26/08)** | 100 lbf (~445 N) | OEM compression load cell, cuerpo compacto | 100 mV/V @ 5 VDC | US$ sin publicar — página TE indica "no disponible actualmente" | ±1% precisión, ±0.05%/°C estabilidad térmica, -40 a 85°C. Aún más subdimensionado que el FX1901 — mismos comentarios, más lejos todavía del rango P5. |
 
 ### Nivel C — Grado investigación (usados en biomecánica/robótica académica)
 
@@ -55,6 +57,11 @@ Dado que la celda de pylon **ya no es la prioridad** del semestre (esa es la pla
 ---
 
 ## Fuentes consultadas
+
+- [FX1901-0001-0200-L datasheet — TE Connectivity](https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=FX19&DocType=Data%20Sheet&DocLang=English&PartCntxt=FX1901-0001-0200-L&DocFormat=pdf)
+- [FX1901-0001-0200-L product page — TE Connectivity](https://www.te.com/en/product-FX1901-0001-0200-L.html)
+- [FC2211-0000-0100-L datasheet — TE Connectivity](https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=FC22&DocType=Data%20Sheet&DocLang=English&PartCntxt=FC2211-0000-0100-L&DocFormat=pdf)
+- [FC2211-0000-0100-L product page — TE Connectivity](https://te.com/usa-en/product-FC2211-0000-0100-L.html)
 
 - [LSB200 S-Beam Jr. — FUTEK](https://www.futek.com/lsb200sbeamoverview)
 - [LCM300 Threaded In-Line Load Cell — FUTEK](https://www.futek.com/store/load-cells/threaded-in-line-load-cells/miniature-threaded-in-line-LCM300)

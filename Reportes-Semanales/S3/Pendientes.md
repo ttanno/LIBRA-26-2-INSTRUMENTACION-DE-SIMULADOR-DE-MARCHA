@@ -1,4 +1,6 @@
-# Pendientes — Semana 3 (abierto 19/08/2026)
+# Pendientes — Semana 3 (abierto 19/08/2026, cerrado 28/08/2026)
+
+> **Cerrado (histórico).** Los ítems que seguían abiertos al cierre de la S3 (incluyendo las observaciones de referencia de posición absoluta del 26/08 y 27/08) se trasladaron a [`Reportes-Semanales/S4/Pendientes.md`](../S4/Pendientes.md).
 
 Nota de trabajo informal (no es parte de los reportes formales). Continúa el mismo formato de `Reportes-Semanales/S1/Pendientes.md`, que quedó cerrado como histórico — la Semana 2 no generó su propio `Pendientes.md` (se usó `Resumen-Semana2.md` como resumen narrativo), así que este archivo retoma directamente lo que seguía abierto de la S1 y suma lo nuevo de la S3. Referencias entre `[ ]` apuntan a `Estado-del-arte/Revision bibliografica - Semana 1-2.md` salvo que se indique otro archivo.
 
@@ -13,6 +15,7 @@ Nota de trabajo informal (no es parte de los reportes formales). Continúa el mi
 - [ ] Diseñar el bracket/adaptador para montar la celda de carga elegida en el punto de anclaje del simulador (pernos del marco rojo, ya identificados en las fotos de `Evidencias/simulador/`).
 - [ ] Hacer un boceto físico de la ubicación real de la celda (no solo el diagrama lógico de bloques).
 - [ ] Validación estructural del bracket/placa en Fusion 360 (Static Stress Simulation) — pendiente de la S1, sigue abierto.
+- [ ] **Caso de carga puntual, ~1200 N (observación, 26/08):** además de la validación estructural general, correr una simulación con una carga puntual de ~1200 N aplicada en un solo punto de la placa/bracket (no repartida uniformemente) — en la práctica la carga real a veces no se distribuye equitativamente sobre la superficie de apoyo, y ese caso concentrado puede dar un esfuerzo (von Mises) más alto que el caso con carga distribuida ya simulado en `Evidencias/simulacion-ansys/`. Definir el punto más desfavorable (borde/esquina de la placa) para el peor caso.
 
 ## Selección de sensor de fuerza del pylon
 
@@ -60,3 +63,14 @@ Nota de trabajo informal (no es parte de los reportes formales). Continúa el mi
 ## Sin dueño claro — verificar antes de cerrar la semana
 
 - [ ] Confirmación formal del asesor sobre el simulador existente (transtibial únicamente, estructura ya construida) — quedó informal en la S1; revisar si la reunión del 12/08 la dejó implícitamente confirmada.
+
+## Referencia de posición absoluta de la plataforma (observación, 26/08)
+
+- [ ] **Problema detectado por Alessandro:** el simulador actual no tiene una referencia de posición inicial absoluta. Sin ella, cualquier sensor incremental (encoder relativo, conteo de pasos del motor paso a paso) solo sabe su posición *relativa* a dónde estaba el eje cuando se encendió el sistema — no a una posición física real y repetible. Esto se conecta directamente con el pendiente ya abierto de la S1 sobre si el motor paso a paso tiene retroalimentación real o es lazo abierto (ver sección "Heredado de la S1 — electrónica / IMU").
+- [ ] Buscar/evaluar un sensor de posición **absoluta** que mantenga la referencia en el tiempo (incluso tras apagar y encender) sin necesitar una rutina de homing manual cada vez. Candidatos a investigar:
+  - Encoder rotativo/lineal **absoluto** (a diferencia del incremental, entrega la posición real desde el primer instante, sin necesidad de referenciarse).
+  - Sensor de home/límite (switch óptico, magnético o mecánico de fin de carrera) para establecer el cero mecánico en cada arranque, combinado con el encoder incremental ya elegido (AS5600).
+- [ ] Definir si el problema de referencia absoluta aplica solo al eje de traslación (husillo/riel) o también al pivote de rotación (flexo-extensión) — probablemente ambos ejes lo necesiten.
+- [x] **Prototipo en prueba (27/08):** para el eje de rotación, `Firmware/homing_absoluto/homing_absoluto.ino` implementa un homing con el acelerómetro del MPU6050 (gravedad como referencia absoluta) que guarda el cero en la memoria flash del ESP32 (persistente entre reinicios). Pendiente: validar en el pivote real y confirmar que la posición mecánica de "cero" corresponde a una orientación reconocible respecto a la gravedad. El eje de traslación (husillo/riel) sigue sin resolver — sigue necesitando encoder absoluto o switch de home.
+- [x] **Prototipo en prueba (27/08), eje de traslación:** `Firmware/homing_husillo_hall/homing_husillo_hall.ino` implementa homing del eje del motor con un imán montado en un collarín impreso + sensor Hall fijo al chasis (índice físico, dos etapas rápida/lenta para precisión, sin necesidad de flash porque se re-homea en cada encendido). Da un cero repetible del EJE DEL MOTOR por vuelta — falta combinarlo con un límite físico en un extremo del riel (switch) para tener el cero absoluto de todo el recorrido, no solo por vuelta. Pendiente: diseñar/imprimir la pieza física (medir diámetro real del eje) y validar en el motor real.
+- [ ] Evaluar si esto debe resolverse por hardware (sensor absoluto o de home) o si basta con un procedimiento de calibración manual al inicio de cada sesión de ensayo, documentado en el protocolo de validación.

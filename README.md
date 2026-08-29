@@ -8,7 +8,7 @@
 | **Institución** | Pontificia Universidad Católica del Perú (PUCP) |
 | **Alumno** | Alessandro Jesus Felix Tello |
 | **Asesor** | Dante Angel Elias Giordano |
-| **Estado** | En curso — Semana 3: diseño mecánico y selección de sensores. Prioridad en discusión entre asesoría (ver nota en [Reportes-Semanales/S3/Pendientes.md](./Reportes-Semanales/S3/Pendientes.md)) |
+| **Estado** | En curso — Semana 4: pruebas de firmware de IMU (BNO055/MPU6050) y prototipos de referencia de posición absoluta (homing) para la plataforma. Prioridad GRF vs. pylon sigue en discusión entre asesoría (ver nota en [Reportes-Semanales/S4/Pendientes.md](./Reportes-Semanales/S4/Pendientes.md)) |
 
 ---
 
@@ -42,14 +42,20 @@ La plataforma **sensa de forma continua** (registro/visualización) durante el u
 
 ## Nota de prioridad (Semana 3)
 
-En la Semana 2, el asesor Dante confirmó una arquitectura de sensado por grado de libertad, con la fuerza de reacción del suelo (GRF, vía la plataforma AMTI BP400600 ya disponible en el laboratorio) como **prioridad**, y la celda de carga en la interfaz pylon–plataforma como **secundaria**. Entrando a la Semana 3 surgió una indicación en sentido contrario por parte de la co-asesora Victoria, de priorizar el pylon. Ambas líneas de trabajo se mantienen documentadas (`Estado-del-arte/SENSORES DE FUERZA/GRF-AMTI/` y `.../PYLON/`); el detalle y la decisión final quedan en [`Reportes-Semanales/S3/Pendientes.md`](./Reportes-Semanales/S3/Pendientes.md).
+En la Semana 2, el asesor Dante confirmó una arquitectura de sensado por grado de libertad, con la fuerza de reacción del suelo (GRF, vía la plataforma AMTI BP400600 ya disponible en el laboratorio) como **prioridad**, y la celda de carga en la interfaz pylon–plataforma como **secundaria**. Entrando a la Semana 3 surgió una indicación en sentido contrario por parte de la co-asesora Victoria, de priorizar el pylon. Ambas líneas de trabajo se mantienen documentadas (`Estado-del-arte/SENSORES DE FUERZA/GRF-AMTI/` y `.../PYLON/`); el detalle y la decisión final quedan en [`Reportes-Semanales/S3/Pendientes.md`](./Reportes-Semanales/S3/Pendientes.md). La disyuntiva sigue sin resolverse formalmente entrando a la Semana 4 (ver [`Reportes-Semanales/S4/Pendientes.md`](./Reportes-Semanales/S4/Pendientes.md)).
 
 ## Estructura del repositorio
 
 ```
 LIBRA/
+├── Firmware/                           Sketches ESP32 (Arduino) y visores Python de prueba, por sensor/subsistema
+│   ├── test_bno055/                    Prueba I2C + sobremuestreo del IMU BNO055, con visor en tiempo real
+│   ├── test_mpu6050/                   Prueba del IMU MPU6050 con filtro complementario propio
+│   ├── homing_absoluto/                Prototipo de cero absoluto del pivote por acelerómetro (persistente en flash)
+│   └── homing_husillo_hall/            Prototipo de homing del eje del husillo con sensor Hall + imán
 ├── Estado-del-arte/                    Fichas de lectura, fuentes primarias (PDF) y la síntesis bibliográfica
 │   ├── ISO/                            Normas y ensayos estructurales de prótesis
+│   ├── REFERENCIA DE POSICION ABSOLUTA/  Arquitecturas de referencia absoluta sin goniómetro (CNC, robótica, laboratorios de marcha)
 │   ├── SENSORES DE FUERZA/
 │   │   ├── PYLON/                      Celda de carga en la interfaz pylon-plataforma: strain gauge, sensor magnético, comparativa de candidatas
 │   │   └── GRF-AMTI/                   Plataforma de fuerza AMTI BP400600 (manuales, pinout, integración)
@@ -59,6 +65,7 @@ LIBRA/
 │   └── Sensores-LIBRA-Presentacion.pptx         Comparativa de sensores de fuerza, distancia y ángulo (soporte visual)
 ├── Evidencias/                         Fotos propias del equipo de laboratorio (no bibliográficas, reutilizables entre semanas)
 │   ├── simulador/                      Simulador físico existente y método de marcadores M1-M4
+│   ├── pruebas-imu-S4/                 Fotos de las pruebas de IMU (banco de protoboard) y del montaje sobre el pylon real (S4)
 │   └── arquitectura-sensores-AMTI-S2.png   Diagrama de arquitectura de sensores por DOF (Semana 2)
 ├── Reportes-Semanales/                 Informes y reportes de avance, por semana
 │   ├── S1/
@@ -69,7 +76,10 @@ LIBRA/
 │   │   ├── S2 - Informe Semanal...
 │   │   ├── S2 - Reporte de Avance...
 │   │   └── Resumen-Semana2.md          Resumen narrativo de la S2 (arquitectura por DOF, integración AMTI)
-│   └── S3/
+│   ├── S3/
+│   │   └── Pendientes.md               Lista de trabajo de la S3 (cerrada; ítems abiertos trasladados a S4)
+│   └── S4/
+│       ├── Resumen-Semana4.md          Resumen narrativo de la S4 (pruebas de IMU y prototipos de homing)
 │       └── Pendientes.md               Lista de trabajo activa (se actualiza semana a semana)
 ├── Plan de trabajo 1_DPB4 - Proyecto Simulador de marcha (2).pdf
 └── README.md
