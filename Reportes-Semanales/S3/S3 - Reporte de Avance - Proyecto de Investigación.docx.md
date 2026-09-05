@@ -39,5 +39,4 @@
 
 | Eventos | Fecha de Ocurrencia | Actividad Afectada | Acciones Tomadas |
 | :---- | :---- | :---- | :---- |
-| E1: Disyuntiva de prioridad GRF vs. pylon (Dante vs. Victoria) sigue sin resolver formalmente | Arrastrado desde el 19/08/2026 | A3 de la Semana 2 (integración AMTI) | Se avanzó en paralelo la investigación de sensores del lado del pylon sin descartar el trabajo ya hecho del lado GRF; pendiente decisión final por escrito con ambos asesores |
-| E2: Factor de seguridad por debajo de 1 en la mayoría de las configuraciones de placa simuladas | 21/08/2026 | A3: Simulación estructural ANSYS | Se iteró sobre cinco configuraciones de espesor y geometría; se identificó que solo la placa sólida de 25 mm cumple el criterio, y se sigue buscando una alternativa con menos material que también lo cumpla |
+| E1: Factor de seguridad por debajo de 1 en la mayoría de las configuraciones de placa simuladas | 21/08/2026 | A3: Simulación estructural ANSYS | Se iteró sobre cinco configuraciones de espesor y geometría; se identificó que solo la placa sólida de 25 mm cumple el criterio, y se sigue buscando una alternativa con menos material que también lo cumpla |

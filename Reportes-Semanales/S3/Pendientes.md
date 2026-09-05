@@ -4,13 +4,7 @@
 
 Nota de trabajo informal (no es parte de los reportes formales). Continúa el mismo formato de `Reportes-Semanales/S1/Pendientes.md`, que quedó cerrado como histórico — la Semana 2 no generó su propio `Pendientes.md` (se usó `Resumen-Semana2.md` como resumen narrativo), así que este archivo retoma directamente lo que seguía abierto de la S1 y suma lo nuevo de la S3. Referencias entre `[ ]` apuntan a `Estado-del-arte/Revision bibliografica - Semana 1-2.md` salvo que se indique otro archivo.
 
-## Prioridad — GRF vs. pylon (decidir y documentar)
-
-- [ ] **Resolver la disyuntiva de prioridad:** en la reunión del 12/08 Dante confirmó GRF (plataforma AMTI) como prioridad y el pylon como secundario. Entrando a la S3, Victoria (asesora del día a día) pidió priorizar el pylon. Falta dejar por escrito con Dante y Victoria cuál es la prioridad real de esta semana, para no generar una desalineación de expectativas.
-- [ ] Documentar el cambio de foco como decisión de asesoría (no como un olvido) en el próximo Informe Semanal / Reporte de Avance, para que quede trazable si Dante pregunta por qué el foco de la semana fue el pylon y no el GRF.
-- [x] Mientras se resuelve, se avanzó investigación de sensores del lado del pylon (ver abajo) sin descartar el trabajo ya hecho del lado GRF/AMTI (Secc. "Integración AMTI" de la S1, `Resumen-Semana2.md`).
-
-## Diseño mecánico del pylon (foco de esta semana si se prioriza a Victoria)
+## Diseño mecánico del pylon (foco de esta semana)
 
 - [ ] Diseñar el bracket/adaptador para montar la celda de carga elegida en el punto de anclaje del simulador (pernos del marco rojo, ya identificados en las fotos de `Evidencias/simulador/`).
 - [ ] Hacer un boceto físico de la ubicación real de la celda (no solo el diagrama lógico de bloques).

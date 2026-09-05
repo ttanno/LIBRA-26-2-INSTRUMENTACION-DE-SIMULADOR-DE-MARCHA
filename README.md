@@ -8,7 +8,7 @@
 | **Institución** | Pontificia Universidad Católica del Perú (PUCP) |
 | **Alumno** | Alessandro Jesus Felix Tello |
 | **Asesor** | Dante Angel Elias Giordano |
-| **Estado** | En curso — Semana 4: pruebas de firmware de IMU (BNO055/MPU6050) y prototipos de referencia de posición absoluta (homing) para la plataforma. Prioridad GRF vs. pylon sigue en discusión entre asesoría (ver nota en [Reportes-Semanales/S4/Pendientes.md](./Reportes-Semanales/S4/Pendientes.md)) |
+| **Estado** | En curso — Semana 4: pruebas de firmware de IMU (BNO055/MPU6050) y prototipos de referencia de posición absoluta (homing) para la plataforma |
 
 ---
 
@@ -39,10 +39,6 @@ En el laboratorio ya existe una plataforma mecánica de simulación de marcha (t
 ## Alcance
 
 La plataforma **sensa de forma continua** (registro/visualización) durante el uso de la prótesis en la simulación. **No** implementa un lazo de control en tiempo real (p. ej. un PID que retroalimente al simulador con los datos del sensor); esto queda como trabajo futuro. Esta distinción simplifica los requerimientos de software: no se exige baja latencia de lazo cerrado, solo sensado sincronizado y confiable.
-
-## Nota de prioridad (Semana 3)
-
-En la Semana 2, el asesor Dante confirmó una arquitectura de sensado por grado de libertad, con la fuerza de reacción del suelo (GRF, vía la plataforma AMTI BP400600 ya disponible en el laboratorio) como **prioridad**, y la celda de carga en la interfaz pylon–plataforma como **secundaria**. Entrando a la Semana 3 surgió una indicación en sentido contrario por parte de la co-asesora Victoria, de priorizar el pylon. Ambas líneas de trabajo se mantienen documentadas (`Estado-del-arte/SENSORES DE FUERZA/GRF-AMTI/` y `.../PYLON/`); el detalle y la decisión final quedan en [`Reportes-Semanales/S3/Pendientes.md`](./Reportes-Semanales/S3/Pendientes.md). La disyuntiva sigue sin resolverse formalmente entrando a la Semana 4 (ver [`Reportes-Semanales/S4/Pendientes.md`](./Reportes-Semanales/S4/Pendientes.md)).
 
 ## Estructura del repositorio
 

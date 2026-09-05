@@ -8,7 +8,7 @@
 
 **1. Resumen Ejecutivo**
 
-Durante la tercera semana el trabajo se concentró en dos frentes: la selección de sensores, organizada por variable sensada en vez de por comparación aislada de componentes, y el inicio de la etapa de simulación estructural de la placa del pylon. En sensores, quedaron definidos el sensor de distancia (TF-Luna) y el de ángulo/rotación (AS5600), con una comparativa completa documentada; el IMU probablemente sea el MPU6050 (la opción más simple, ya disponible en el laboratorio); y la celda de fuerza sigue abierta, con la búsqueda enfocada esta semana en marcas y proveedores peruanos. En simulación, se definieron las propiedades de material e impresión en una hoja de cálculo propia (PETG) y se corrieron cinco configuraciones distintas de la placa en ANSYS (tres espesores sólidos y dos variantes con menos material), encontrando que solo la placa sólida de 25 mm cumple un factor de seguridad mayor a 1 hasta el momento. Sigue sin resolverse formalmente con los asesores la disyuntiva de prioridad entre GRF y pylon planteada la semana pasada.
+Durante la tercera semana el trabajo se concentró en dos frentes: la selección de sensores, organizada por variable sensada en vez de por comparación aislada de componentes, y el inicio de la etapa de simulación estructural de la placa del pylon. En sensores, quedaron definidos el sensor de distancia (TF-Luna) y el de ángulo/rotación (AS5600), con una comparativa completa documentada; el IMU probablemente sea el MPU6050 (la opción más simple, ya disponible en el laboratorio); y la celda de fuerza sigue abierta, con la búsqueda enfocada esta semana en marcas y proveedores peruanos. En simulación, se definieron las propiedades de material e impresión en una hoja de cálculo propia (PETG) y se corrieron cinco configuraciones distintas de la placa en ANSYS (tres espesores sólidos y dos variantes con menos material), encontrando que solo la placa sólida de 25 mm cumple un factor de seguridad mayor a 1 hasta el momento.
 
 **2. Actividades Realizadas**
 
@@ -36,8 +36,6 @@ Durante la tercera semana el trabajo se concentró en dos frentes: la selección
 
 **4. Dificultades o Problemas Presentados**
 
-**Disyuntiva de prioridad GRF vs. pylon sigue sin resolver.** Desde la Semana 2 Dante había confirmado GRF (plataforma AMTI) como prioridad y el pylon como secundario; entrando a la Semana 3, Victoria pidió priorizar el pylon. La discrepancia sigue sin resolverse formalmente por escrito con ambos asesores, lo que retrasó el trabajo directo sobre la integración de la AMTI (ver actividades no ejecutadas arriba). Mientras se resuelve, se avanzó en paralelo la investigación de sensores del lado del pylon.
-
 **Factor de seguridad por debajo de 1 en la mayoría de configuraciones de placa simuladas.** Solo la configuración sólida de 25 mm cumple el criterio; las demás (15 mm, 20 mm, y las variantes con menos material) quedan por debajo del umbral en el mismo punto crítico, cerca de un agujero de perno. Se seguirá iterando la próxima semana combinando espesor y refuerzo/vaciado para buscar una solución que cumpla sin sobredimensionar toda la placa.
 
 **5. Lecciones Aprendidas / Recomendaciones**
@@ -48,7 +46,6 @@ Comparar variantes de geometría (vaciado central, refuerzo en cruz) además de 
 
 | Actividad | Objetivo |
 | :---- | :---- |
-| Resolver formalmente con Dante y Victoria la prioridad GRF vs. pylon de la semana | Evitar seguir avanzando sobre un frente que luego se tenga que repriorizar |
 | Definir el diseño final de la placa combinando refuerzo/vaciado central con un espesor intermedio (entre 20 y 25 mm) | Objetivo específico 1 — buscar factor de seguridad >1 con menos material que la opción sólida de 25 mm |
 | Cerrar la búsqueda de sensor de fuerza en proveedores peruanos | Objetivo específico 2 |
 | Confirmar el MPU6050 como candidato final de IMU contra el inventario del laboratorio | Objetivo específico 2 |

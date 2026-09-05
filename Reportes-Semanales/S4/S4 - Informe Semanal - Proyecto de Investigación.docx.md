@@ -26,7 +26,6 @@ Durante la cuarta semana el trabajo se concentró en firmware de sensórica: pru
 
 | Actividad Planificada | Estado (Ejecutada / En proceso / No ejecutada) | Comentarios (justificación si aplica) |
 | :---- | :---- | :---- |
-| Resolver formalmente con Dante y Victoria la prioridad GRF vs. pylon | No ejecutada | El foco de la semana se volcó a firmware de IMU y homing; se retoma la próxima semana |
 | Definir el diseño final de la placa combinando refuerzo/vaciado con un espesor intermedio (20-25 mm) | No ejecutada | Mismo motivo; ver `Estado-del-arte/SIMULADOR DE MARCHA/` |
 | Cerrar la búsqueda de sensor de fuerza en proveedores peruanos | No ejecutada | Sin avance esta semana |
 | Confirmar el MPU6050 como candidato final de IMU contra el inventario del laboratorio | En proceso | Se probó el sensor en firmware; falta la comparación lado a lado con el BNO055 y la verificación de inventario |
@@ -53,7 +52,6 @@ Antes de diseñar un prototipo de homing desde cero, conviene revisar cómo lo r
 | Correr la prueba lado a lado BNO055 vs. MPU6050 y cerrar la decisión de IMU | Objetivo específico 2 |
 | Medir el eje del motor del husillo, diseñar/imprimir el collarín con el imán y validar el homing Hall en el motor real | Objetivo específico 1 y 3 |
 | Definir el límite físico de fin de carrera del riel para el cero absoluto de todo el recorrido | Objetivo específico 1 |
-| Resolver formalmente con Dante y Victoria la prioridad GRF vs. pylon | Evitar seguir avanzando sobre un frente que luego se tenga que repriorizar |
 | Retomar el diseño final de la placa y la búsqueda de sensor de fuerza en proveedores peruanos | Objetivo específico 1 y 2 |
 
 **7. Anexos o Evidencias**

@@ -23,11 +23,6 @@ Nota de trabajo informal (no es parte de los reportes formales). Continúa el mi
 - [ ] Prueba lado a lado BNO055 vs. MPU6050 sobre el mismo movimiento (los dos visores en paralelo), para confirmar la decisión de la S3 (MPU6050 como candidato final de IMU).
 - [ ] Confirmar el MPU6050 contra el inventario del laboratorio (heredado S1/S3 — sigue abierto, ver sección de abajo).
 
-## Prioridad — GRF vs. pylon (decidir y documentar) — heredado, sigue sin resolver
-
-- [ ] **Resolver la disyuntiva de prioridad:** Dante confirmó GRF (plataforma AMTI) como prioridad en la reunión del 12/08; entrando a la S3, Victoria pidió priorizar el pylon. Sigue sin quedar por escrito cuál es la prioridad real, entrando ya a la cuarta semana sin ese punto resuelto.
-- [ ] Documentar el cambio de foco como decisión de asesoría (no como un olvido) en el próximo Informe Semanal / Reporte de Avance.
-
 ## Selección de sensor de fuerza del pylon — heredado, sin avance esta semana
 
 - [ ] Elegir una candidata final de la comparativa (celda propia escalada vs. FUTEK LCM300 vs. otras opciones) y cerrar el pedido/cotización.

@@ -78,7 +78,7 @@ Da un cero repetible del eje del motor por vuelta, pero no resuelve por sí solo
 - Registrar datos cuantitativos del homing por acelerómetro con el IMU ya montado en el pylon real, y confirmar que el cero mecánico corresponde a una orientación reconocible respecto a la gravedad.
 - Medir el diámetro real del eje del motor del husillo (calibre) y diseñar/imprimir el collarín con el imán para el homing Hall, luego validarlo en el motor real (por ahora solo probado en firmware).
 - Definir el límite físico de fin de carrera del riel (switch) para combinar con el índice magnético del husillo y tener el cero absoluto de todo el recorrido, no solo por vuelta.
-- Seguir con los pendientes heredados de la S3 (prioridad GRF vs. pylon sin resolver formalmente, sensor de fuerza del pylon sin cerrar) — ver `Pendientes.md`.
+- Seguir con los pendientes heredados de la S3 (sensor de fuerza del pylon sin cerrar) — ver `Pendientes.md`.
 
 ---
 
