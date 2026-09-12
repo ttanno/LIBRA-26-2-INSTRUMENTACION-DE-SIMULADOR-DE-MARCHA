@@ -58,6 +58,18 @@ Esta doble vía (versión final dimensionada al sensor + versión imprimible sim
 
 ---
 
+## 4. Diseño del adaptador para el sensor de distancia (VL53L1X)
+
+En paralelo al diseño del pylon, se empezó el diseño en Fusion 360 de un adaptador/soporte que sujeta el sensor de distancia VL53L1X (componente enlazado `VL53l1X v1:1`, junto con `ESP32 v1:1`) sobre la plataforma del simulador — archivo de pieza `SENSOR DISTANCIA AGARRI...` dentro del ensamble general `SIMULADOR v3`, con las piezas relacionadas `PLACA BASE v3` y `SOPORTECAJA v1` también en edición esta semana.
+
+| ![Adaptador del sensor de distancia — iteración en curso](../../Evidencias/diseno-adaptador-sensor-S5/adaptador-sensor-distancia-1.png) |
+|---|
+| Vista del adaptador (pieza en L) con el módulo VL53L1X montado, dentro del árbol de bocetos/cuerpos de la pieza en Fusion 360 |
+
+Es una iteración temprana: el diseño ya sostiene el sensor en la posición esperada, pero todavía está en revisión — en el ensamble general (`SIMULADOR v3`) se corrió un chequeo de interferencia (Utilities → Inspect → Interference) entre el soporte en ángulo y la placa base para detectar colisiones antes de imprimir. Queda pendiente resolver esas interferencias (si las hay) y definir la fijación final del adaptador a la plataforma.
+
+---
+
 ## Próximos pasos
 
 - Escribir al vendedor (QILICHUANGAN / QL Sensor) para confirmar el tipo de salida real (mV/V crudo vs. amplificado) de la celda comprada, compatibilidad con el ADS1256 ya decidido — señal de alerta pendiente de la propia comparativa ("Push-Pull").
@@ -65,6 +77,7 @@ Esta doble vía (versión final dimensionada al sensor + versión imprimible sim
 - Imprimir la versión B (imprimible, con insertos + tornillos) y correr las pruebas de ajuste/ensamblaje pendientes en el simulador.
 - Correr la validación estructural en Fusion 360 (Static Stress Simulation) de la versión A una vez confirmada la capacidad final del sensor, incluyendo el caso de carga puntual ~1200 N heredado de la S3.
 - Evaluar el cambio de IMU (MPU6050 → LSM6DSR o ICM-45686) y, en paralelo, diseñar una marca/tope mecánico de referencia para el pivote, antes de repetir la validación cuantitativa del homing que quedó pendiente desde la S4.
+- Resolver las interferencias detectadas (si las hay) entre el adaptador del sensor de distancia y la placa base/soporte, y cerrar el diseño de fijación del adaptador a la plataforma.
 
 ---
 
@@ -75,3 +88,4 @@ Esta doble vía (versión final dimensionada al sensor + versión imprimible sim
 - `Estado-del-arte/SENSORES DE FUERZA/PYLON/Comparativa-Sensores-Fuerza-Axial-Pylon.md` — requisitos P5 y comparativa previa de sensores (19/08/2026).
 - `Firmware/homing_absoluto/homing_absoluto.ino` — prototipo de homing donde se observó el problema de repetibilidad que motivó la comparativa de IMU.
 - `Reportes-Semanales/S4/Pendientes.md` — pendientes heredados de selección de sensor de fuerza y diseño mecánico del pylon.
+- `Evidencias/diseno-adaptador-sensor-S5/adaptador-sensor-distancia-1.png` — captura del adaptador del sensor VL53L1X en Fusion 360 (08/09/2026).
