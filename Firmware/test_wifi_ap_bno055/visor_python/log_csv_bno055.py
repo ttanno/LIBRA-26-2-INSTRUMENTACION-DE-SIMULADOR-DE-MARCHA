@@ -23,6 +23,11 @@ guarda en su propio archivo (bno055_<fecha>_<hora>_repNdeM.csv) y al final
 se imprime una tabla comparando el ruido (desviacion estandar) de todas
 las repeticiones juntas.
 
+Si en vez de pausa manual (Enter) quieres que la pausa entre repeticiones
+sea automatica de N segundos (util para dejar el sensor quieto en la misma
+posicion y correr todo sin intervencion), usa --pausa:
+    python log_csv_bno055.py --port COM7 --duracion 30 --repeticiones 10 --pausa 30
+
 Si no se indica --duracion, cada grabacion registra hasta que presiones
 Ctrl+C (con --repeticiones > 1 y sin --duracion, Ctrl+C solo corta la
 grabacion actual y pasa a la pausa de la siguiente).
@@ -180,6 +185,15 @@ def grabar_una_vez(ser: serial.Serial, nombre_salida: str, duracion):
     return resultado
 
 
+def todos_en_cero(resultado) -> bool:
+    """True si la repeticion tiene datos pero todos los valores son 0.0
+    (senal de que el BNO055 no se detecto bien al arrancar)."""
+    if resultado["filas"] < 1:
+        return False
+    campos = ("heading", "roll", "pitch", "ax", "ay", "az")
+    return all(v == 0.0 for campo in campos for v in resultado[campo])
+
+
 def main():
     ap = argparse.ArgumentParser(description="Registro a CSV del BNO055 por cable (COM)")
     ap.add_argument("--port", help="Puerto serial (ej. COM7). Si se omite, se pide interactivamente.")
@@ -199,6 +213,10 @@ def main():
     ap.add_argument(
         "--sin-borrar-cero", action="store_true",
         help="No borrar el cero absoluto guardado en flash antes de cada grabacion (por defecto SI se borra).",
+    )
+    ap.add_argument(
+        "--pausa", type=float, default=None,
+        help="Segundos de pausa automatica entre repeticiones (sin esperar Enter). Si se omite, se espera Enter.",
     )
     args = ap.parse_args()
 
@@ -223,7 +241,11 @@ def main():
         for i in range(1, args.repeticiones + 1):
             if args.repeticiones > 1:
                 print(f"\n=== Repeticion {i} de {args.repeticiones} ===")
-                input("Acomoda el sensor (mismo lugar u otro) y presiona Enter para empezar a grabar...")
+                if i > 1 and args.pausa is not None:
+                    print(f"Pausa automatica de {args.pausa:.0f} s antes de la siguiente grabacion...")
+                    time.sleep(args.pausa)
+                elif args.pausa is None:
+                    input("Acomoda el sensor (mismo lugar u otro) y presiona Enter para empezar a grabar...")
                 nombre_salida = f"{base}_rep{i}de{args.repeticiones}.csv"
             else:
                 nombre_salida = f"{base}.csv"
@@ -233,6 +255,18 @@ def main():
 
             resultado = grabar_una_vez(ser, nombre_salida, args.duracion)
             resultados.append(resultado)
+
+            if i == 1 and args.repeticiones > 1 and todos_en_cero(resultado):
+                print(
+                    "\nATENCION: la repeticion 1 registro todos los valores en 0.0 "
+                    "-- el BNO055 puede no haberse detectado bien al arrancar."
+                )
+                resp = input(
+                    "¿Deseas continuar con las siguientes repeticiones de todas formas? (s/n): "
+                ).strip().lower()
+                if resp != "s":
+                    print("Deteniendo antes de las siguientes repeticiones.")
+                    break
     finally:
         ser.close()
 

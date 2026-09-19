@@ -1,0 +1,18 @@
+﻿paso,evento,raw_code,tara_guardada,delta_counts,factor_N_por_cuenta,force_N,explicacion
+1,"celda vacia, sin tarar (calibrated=0)",-22861,-,-,-,0.0,"raw_code crudo, no significa nada en Newtons todavia"
+1,"celda vacia, sin tarar (calibrated=0)",-22877,-,-,-,0.0,"raw_code crudo, no significa nada en Newtons todavia"
+1,"celda vacia, sin tarar (calibrated=0)",-22870,-,-,-,0.0,"raw_code crudo, no significa nada en Newtons todavia"
+1,"celda vacia, sin tarar (calibrated=0)",-22758,-,-,-,0.0,"raw_code crudo, no significa nada en Newtons todavia"
+1,"celda vacia, sin tarar (calibrated=0)",-22847,-,-,-,0.0,"raw_code crudo, no significa nada en Newtons todavia"
+1,"celda vacia, sin tarar (calibrated=0)",-22976,-,-,-,0.0,"raw_code crudo, no significa nada en Newtons todavia"
+2,escribis 't' -> el sketch promedia esas 6 lecturas,-,-22864.8,-,-,-,"tara_guardada = promedio de las lecturas de arriba, queda guardado en flash"
+3,pusiste una masa patron de 2.000 kg (todavia sin 'k'),-4980,-22864.8,17884.8,-,-,"raw_code ya cambio por la masa, pero aun no hay factor calculado"
+3,pusiste una masa patron de 2.000 kg (todavia sin 'k'),-5010,-22864.8,17854.8,-,-,"raw_code ya cambio por la masa, pero aun no hay factor calculado"
+3,pusiste una masa patron de 2.000 kg (todavia sin 'k'),-5005,-22864.8,17859.8,-,-,"raw_code ya cambio por la masa, pero aun no hay factor calculado"
+3,pusiste una masa patron de 2.000 kg (todavia sin 'k'),-4995,-22864.8,17869.8,-,-,"raw_code ya cambio por la masa, pero aun no hay factor calculado"
+3,pusiste una masa patron de 2.000 kg (todavia sin 'k'),-5020,-22864.8,17844.8,-,-,"raw_code ya cambio por la masa, pero aun no hay factor calculado"
+3,pusiste una masa patron de 2.000 kg (todavia sin 'k'),-5001,-22864.8,17863.8,-,-,"raw_code ya cambio por la masa, pero aun no hay factor calculado"
+4,escribis 'k2.0' -> el sketch calcula el factor,-5001.8,-22864.8,17863.0,0.00109798,19.6133,factor = (masa_kg * 9.80665) / delta_counts = fuerza_conocida / delta_counts; se guarda en flash
+5,celda vacia de nuevo (deberia dar ~0 N),-22850,-22864.8,14.8,0.00109798,0.0163,force_N = (raw_code - tara) * factor -- equivale a ~0.002 kg
+5,misma masa patron de 2 kg otra vez (deberia dar ~19.6 N),-5005,-22864.8,17859.8,0.00109798,19.6098,force_N = (raw_code - tara) * factor -- equivale a ~2.000 kg
+5,una masa DISTINTA que nunca calibraste directo,-13900,-22864.8,8964.8,0.00109798,9.8432,force_N = (raw_code - tara) * factor -- equivale a ~1.004 kg

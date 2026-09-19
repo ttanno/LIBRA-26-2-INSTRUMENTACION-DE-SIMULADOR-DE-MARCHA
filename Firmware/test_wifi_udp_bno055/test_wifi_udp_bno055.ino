@@ -52,6 +52,7 @@
 #include <WiFiUdp.h>
 #include <Preferences.h>
 #include <math.h>
+#include <string.h>
 #include "DFRobot_BNO055.h"
 
 typedef DFRobot_BNO055_IIC BNO;
@@ -187,15 +188,33 @@ void guardarCalibAccelEnFlash(float x, float y, float z) {
   prefs.end();
 }
 
+// La libreria DFRobot_BNO055 no expone un metodo para escribir ACC_RADIUS
+// (registros 0x67/0x68) -- solo escribe los offsets (setAxisOffset). Segun
+// el datasheet de Bosch, el "perfil de calibracion" completo del
+// acelerometro incluye offset + radius; sin el radius, el algoritmo interno
+// del chip puede quedarse sin subir calib.accel a 3/3 aunque los offsets ya
+// esten corrigiendo bien la lectura. Se escribe crudo por I2C, en modo
+// CONFIG (igual que el offset), usando ~1000 mg (1g) como aproximacion
+// razonable ya que nunca llegamos a medir el radius real via auto-cal.
+void escribirAccRadiusCrudo(uint16_t valorMg) {
+  Wire.beginTransmission(0x28);
+  Wire.write(0x67);               // ACC_RADIUS_LSB
+  Wire.write(valorMg & 0xFF);
+  Wire.write((valorMg >> 8) & 0xFF);
+  Wire.endTransmission();
+}
+
 void aplicarCalibracionAccel(float offX, float offY, float offZ, bool guardar) {
   BNO::sAxisAnalog_t offset;
   offset.x = offX;
   offset.y = offY;
   offset.z = offZ;
 
-  bno.setOprMode(BNO::eOprModeConfig);  // los registros de offset solo se pueden escribir en modo CONFIG
+  bno.setOprMode(BNO::eOprModeConfig);  // los registros de offset/radius solo se pueden escribir en modo CONFIG
   delay(25);
   bno.setAxisOffset(BNO::eAxisAcc, offset);
+  delay(10);
+  escribirAccRadiusCrudo(1000);
   delay(25);
   bno.setOprMode(BNO::eOprModeNdof);    // volver al modo de fusion normal
   delay(25);
@@ -244,6 +263,90 @@ void conectarWifi() {
   Serial.print(PC_IP);
   Serial.print(":");
   Serial.println(UDP_PORT);
+}
+
+// ---- Filtro EMA (promedio movil exponencial) para heading/roll/pitch ----
+// Decision documentada en Evidencias/pruebas-imu-S5/Analisis-Prueba-Quieto-S5.md:
+// el BNO055 ya hace fusion sensorial interna (NDOF), asi que un EMA barato
+// alcanza para suavizar el ruido electrico normal -- no hace falta Kalman ni
+// ML encima. IMPORTANTE (ver Evidencias/pruebas-imu-S7): el EMA suaviza
+// ruido de alta frecuencia, pero NO arregla una deriva lenta real (conexion
+// floja, sensor que se movio) -- eso se ve como una senal con autocorrelacion
+// alta, no como ruido, y ningun filtro de suavizado la elimina sin tambien
+// borrar cambios reales de orientacion. Para eso esta el chequeo de salud
+// de mas abajo, que usa el dato CRUDO (sin filtrar) justamente para no
+// enmascarar ese problema.
+const float EMA_ALPHA = 0.10f;  // mas chico = mas suave pero mas lento a un cambio real de orientacion
+bool emaInicializado = false;
+float emaHeading = 0, emaRoll = 0, emaPitch = 0;
+
+// EMA "circular": si el angulo cruza el limite (ej. de 179.9 a -179.9,
+// o de 359 a 0 en heading), un EMA ingenuo calcularia un salto falso de
+// ~360 grados. Aqui se corrige la diferencia al rango [-180,180] antes de
+// promediar.
+float emaAngular(float nuevo, float anterior, float alpha) {
+  float diff = nuevo - anterior;
+  while (diff > 180.0f)  diff -= 360.0f;
+  while (diff < -180.0f) diff += 360.0f;
+  return anterior + alpha * diff;
+}
+
+void actualizarFiltroEMA(float headingCrudo, float rollCrudo, float pitchCrudo) {
+  if (!emaInicializado) {
+    emaHeading = headingCrudo;
+    emaRoll = rollCrudo;
+    emaPitch = pitchCrudo;
+    emaInicializado = true;
+    return;
+  }
+  emaHeading = emaAngular(headingCrudo, emaHeading, EMA_ALPHA);
+  if (emaHeading < 0)      emaHeading += 360.0f;
+  if (emaHeading >= 360.0f) emaHeading -= 360.0f;
+  emaRoll  = emaAngular(rollCrudo,  emaRoll,  EMA_ALPHA);
+  emaPitch = emaAngular(pitchCrudo, emaPitch, EMA_ALPHA);
+}
+
+// ---- Chequeo de salud de conexion (deteccion de ruido/deriva alta) ----
+// Umbral sacado de datos reales, no de una corazonada: en
+// Evidencias/pruebas-imu-S7 se midio std=~0.0000-0.0007 grados con la
+// conexion bien puesta, y std=0.35-0.63 grados cuando el cable/conector del
+// BNO055 estaba flojo -- una separacion de ~500x. 0.10 grados queda comodo
+// en el medio, con margen de sobra para ambos lados.
+const int SALUD_N = 50;                // ~5 s de ventana a ~10 Hz
+const float SALUD_UMBRAL_STD = 0.10f;  // grados
+float saludRollBuf[SALUD_N];
+float saludPitchBuf[SALUD_N];
+int saludIdx = 0;
+
+void chequearSaludConexion(float rollCrudo, float pitchCrudo) {
+  saludRollBuf[saludIdx] = rollCrudo;
+  saludPitchBuf[saludIdx] = pitchCrudo;
+  saludIdx++;
+  if (saludIdx < SALUD_N) return;
+  saludIdx = 0;
+
+  double sumR = 0, sumP = 0;
+  for (int i = 0; i < SALUD_N; i++) { sumR += saludRollBuf[i]; sumP += saludPitchBuf[i]; }
+  double meanR = sumR / SALUD_N, meanP = sumP / SALUD_N;
+
+  double varR = 0, varP = 0;
+  for (int i = 0; i < SALUD_N; i++) {
+    varR += (saludRollBuf[i] - meanR) * (saludRollBuf[i] - meanR);
+    varP += (saludPitchBuf[i] - meanP) * (saludPitchBuf[i] - meanP);
+  }
+  float stdR = sqrt(varR / SALUD_N);
+  float stdP = sqrt(varP / SALUD_N);
+
+  if (stdR > SALUD_UMBRAL_STD || stdP > SALUD_UMBRAL_STD) {
+    char alerta[180];
+    snprintf(alerta, sizeof(alerta),
+             "ALERTA[conexion]: ruido alto en los ultimos %d s -> roll_std=%.3f pitch_std=%.3f (umbral=%.2f). Revisar cable/conector del BNO055.",
+             SALUD_N / 10, stdR, stdP, SALUD_UMBRAL_STD);
+    Serial.println(alerta);
+    udp.beginPacket(PC_IP, UDP_PORT);
+    udp.write((const uint8_t*)alerta, strlen(alerta));
+    udp.endPacket();
+  }
 }
 
 // Atiende un comando venga de donde venga (Serial o UDP), como linea de texto:
@@ -343,11 +446,23 @@ void loop() {
   float liaY = lia.y * MG_TO_MS2;
   float liaZ = lia.z * MG_TO_MS2;
 
-  char buf[260];
+  // El chequeo de salud usa el dato CRUDO (antes de filtrar) a proposito --
+  // ver el comentario en chequearSaludConexion().
+  chequearSaludConexion(eul.roll, eul.pitch);
+
+  // Euler[...] de aqui en adelante es la version FILTRADA (EMA) -- es lo
+  // que conviene usar para analisis/logging. El crudo queda igual visible
+  // en EulerCrudo[...] para comparar/depurar.
+  actualizarFiltroEMA(eul.head, eul.roll, eul.pitch);
+
+  // IMPORTANTE: no cambiar el orden Euler[...] | LinAccel[...] -- el
+  // parser de log_csv_bno055.py/visor_*.py busca ese patron pegado. Los
+  // campos nuevos (EulerCrudo) van al final para no romperlo.
+  char buf[340];
   int len = snprintf(buf, sizeof(buf),
                       "Calib[sys,gyro,accel,mag]=%u,%u,%u,%u | Euler[heading,roll,pitch]=%.2f,%.2f,%.2f | LinAccel[x,y,z]=%.2f,%.2f,%.2f | AccRaw[x,y,z]=%.1f,%.1f,%.1f | Zero=%s",
                       calib.SYS, calib.GYR, calib.ACC, calib.MAG,
-                      eul.head, eul.roll, eul.pitch,
+                      emaHeading, emaRoll, emaPitch,
                       liaX, liaY, liaZ,
                       accRaw.x, accRaw.y, accRaw.z,
                       zeroIsSet ? "SI" : "NO");
@@ -355,8 +470,12 @@ void loop() {
   if (zeroIsSet) {
     len += snprintf(buf + len, sizeof(buf) - len,
                      " | EulerAbs[heading,roll,pitch]=%.2f,%.2f,%.2f",
-                     eul.head - zeroHeading, eul.roll - zeroRoll, eul.pitch - zeroPitch);
+                     emaHeading - zeroHeading, emaRoll - zeroRoll, emaPitch - zeroPitch);
   }
+
+  len += snprintf(buf + len, sizeof(buf) - len,
+                   " | EulerCrudo[heading,roll,pitch]=%.2f,%.2f,%.2f",
+                   eul.head, eul.roll, eul.pitch);
 
   udp.beginPacket(PC_IP, UDP_PORT);
   udp.write((const uint8_t*)buf, len);
