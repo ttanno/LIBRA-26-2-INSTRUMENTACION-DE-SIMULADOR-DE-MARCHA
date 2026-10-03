@@ -1,0 +1,4 @@
+angulo_real,promedio_medido,error,std,filas,archivo
+0.0,-0.249,-0.249,0.0051,320,angulos_redo_S9_0deg_01.csv
+10.0,9.441,-0.559,0.0043,257,angulos_redo_S9_10deg_02.csv
+0.0,-0.188,-0.188,0.0064,297,angulos_redo_S9_0deg_03.csv

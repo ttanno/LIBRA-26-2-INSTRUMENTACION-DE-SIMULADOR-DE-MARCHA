@@ -23,8 +23,10 @@
  * Conexionado del sensor: identico a test_bno055.ino / test_wifi_udp_bno055.ino
  *   BNO055 (SEN0374) VCC -> ESP32 3V3
  *   BNO055 (SEN0374) GND -> ESP32 GND
- *   BNO055 (SEN0374) SDA -> ESP32 GPIO21
- *   BNO055 (SEN0374) SCL -> ESP32 GPIO22
+ *   BNO055 (SEN0374) SDA -> ESP32 GPIO17  (SDA2, bus I2C dedicado = Wire1)
+ *   BNO055 (SEN0374) SCL -> ESP32 GPIO16  (SCL2, bus I2C dedicado = Wire1)
+ *   (S9: antes GPIO21/22 en Wire; se movio al pinout final de la PCB,
+ *    ver Firmware/PCB_placa_superior_PINOUT.md. GPIO21/22 quedan para los ToF.)
  *
  * ANTES DE CARGAR: puedes cambiar AP_SSID/AP_PASSWORD si quieres (el
  * password debe tener minimo 8 caracteres o el ESP32 crea la red abierta,
@@ -66,7 +68,7 @@ const uint16_t UDP_PORT = 4211;
 
 IPAddress BROADCAST_IP(192, 168, 4, 255);  // subred fija del modo AP del ESP32
 
-BNO bno(&Wire, 0x28);
+BNO bno(&Wire1, 0x28);   // bus I2C dedicado (GPIO17 SDA / GPIO16 SCL)
 WiFiUDP udp;
 
 Preferences prefs;
@@ -199,11 +201,11 @@ void guardarCalibAccelEnFlash(float x, float y, float z) {
 // CONFIG (igual que el offset), usando ~1000 mg (1g) como aproximacion
 // razonable ya que nunca llegamos a medir el radius real via auto-cal.
 void escribirAccRadiusCrudo(uint16_t valorMg) {
-  Wire.beginTransmission(0x28);
-  Wire.write(0x67);               // ACC_RADIUS_LSB
-  Wire.write(valorMg & 0xFF);
-  Wire.write((valorMg >> 8) & 0xFF);
-  Wire.endTransmission();
+  Wire1.beginTransmission(0x28);
+  Wire1.write(0x67);               // ACC_RADIUS_LSB
+  Wire1.write(valorMg & 0xFF);
+  Wire1.write((valorMg >> 8) & 0xFF);
+  Wire1.endTransmission();
 }
 
 void aplicarCalibracionAccel(float offX, float offY, float offZ, bool guardar) {
@@ -332,6 +334,33 @@ void chequearSaludConexion(float rollCrudo, float pitchCrudo) {
   }
 }
 
+// ---- Boton fisico de disparo (BOOT del ESP32, GPIO0, activo en LOW) ----
+// No requiere cableado extra -- toda placa de desarrollo ESP32 ya trae este
+// boton. Util para la prueba de angulos conocidos (prueba_angulos_conocidos.py):
+// en vez de tener que soltar el sensor para presionar Enter en la laptop,
+// presionas este boton con la mano libre y el script arranca a grabar solo.
+// Manda "BTN" por Serial y por UDP (broadcast) al detectar el flanco de
+// presionado, con debounce simple por tiempo.
+#define PIN_BOTON 0
+bool botonEstadoAnterior = HIGH;
+unsigned long botonUltimoCambio = 0;
+const unsigned long BOTON_DEBOUNCE_MS = 50;
+
+void revisarBoton() {
+  bool estado = digitalRead(PIN_BOTON);
+  unsigned long ahora = millis();
+  if (estado != botonEstadoAnterior && (ahora - botonUltimoCambio) > BOTON_DEBOUNCE_MS) {
+    botonUltimoCambio = ahora;
+    botonEstadoAnterior = estado;
+    if (estado == LOW) {  // presionado (pull-up interno, activo en LOW)
+      Serial.println("BTN");
+      udp.beginPacket(BROADCAST_IP, UDP_PORT);
+      udp.write((const uint8_t*)"BTN", 3);
+      udp.endPacket();
+    }
+  }
+}
+
 // Atiende un comando venga de donde venga (Serial o UDP), como linea de texto:
 //   z              -> fija el cero absoluto actual
 //   c              -> borra el cero absoluto guardado
@@ -376,7 +405,9 @@ void setup() {
   Serial.println(WiFi.softAPIP());
   Serial.println("Conecta tu laptop a esta red WiFi y corre visor_wifi_ap_bno055.py");
 
-  Wire.begin(21, 22);
+  pinMode(PIN_BOTON, INPUT_PULLUP);
+
+  Wire1.begin(17, 16);   // SDA=GPIO17, SCL=GPIO16 (antes Wire.begin(21, 22))
 
   if (bno.begin() != BNO::eStatusOK) {
     Serial.println("ERROR: no se detecto el BNO055. Revisar alimentacion, SDA/SCL y direccion I2C.");
@@ -424,6 +455,8 @@ void setup() {
 void loop() {
   // En modo AP el ESP32 no se "desconecta" de si mismo, asi que no hace
   // falta la logica de reconexion que si tenia la version con red externa.
+
+  revisarBoton();
 
   if (Serial.available() > 0) {
     String linea = Serial.readStringUntil('\n');

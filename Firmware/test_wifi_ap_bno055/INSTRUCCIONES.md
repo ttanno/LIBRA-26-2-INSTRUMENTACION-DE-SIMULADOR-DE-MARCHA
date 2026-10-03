@@ -6,7 +6,7 @@ Versión de `test_wifi_udp_bno055.ino` que **no depende de ninguna red WiFi exis
 
 ## 1. Conexionado
 
-Igual que siempre: BNO055 → ESP32, VCC-3V3, GND-GND, SDA-GPIO21, SCL-GPIO22.
+Igual que siempre: BNO055 → ESP32, VCC-3V3, GND-GND, SDA-**GPIO17**, SCL-**GPIO16** (bus `Wire1`, pinout final de la PCB; hasta la S8 era SDA-GPIO21, SCL-GPIO22).
 
 ## 2. Configurar el sketch (opcional)
 
