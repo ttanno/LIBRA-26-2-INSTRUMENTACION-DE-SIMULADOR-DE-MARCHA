@@ -48,16 +48,32 @@ EJE = "roll"
 MAPA = {
     "subida": {
         0:  ["angulos_subida_0deg_01.csv", "angulos_subida_0deg_02.csv", "angulos_subida_0deg_03.csv"],
-        5:  ["angulos_subida_5deg_04.csv", "angulos_subida_5deg_05.csv", "angulos_subida_5deg_06.csv"],
-        10: ["angulos_subida_10deg_07.csv", "angulos_subida_10deg_08.csv", "angulos_subida_10deg_09.csv"],
-        15: ["angulos_subida_15deg_10.csv", "angulos_subida_15deg_11.csv", "angulos_subida_15deg_12.csv"],
-        20: ["angulos_subida_20deg_13.csv", "angulos_subida_20deg_14.csv", "angulos_subida_20deg_15.csv"],
-        25: ["angulos_subida_25deg_16.csv", "angulos_subida_25deg_17.csv", "angulos_subida_25deg_18.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_5deg_04.csv.
+        5:  ["angulos_subida_5deg_05.csv", "angulos_subida_5deg_06.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_10deg_07.csv.
+        10: ["angulos_subida_10deg_08.csv", "angulos_subida_10deg_09.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_15deg_10.csv.
+        15: ["angulos_subida_15deg_11.csv", "angulos_subida_15deg_12.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_20deg_13.csv.
+        20: ["angulos_subida_20deg_14.csv", "angulos_subida_20deg_15.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_25deg_16.csv.
+        25: ["angulos_subida_25deg_17.csv", "angulos_subida_25deg_18.csv"],
         30: ["angulos_subida_30deg_19.csv", "angulos_subida_30deg_20.csv", "angulos_subida_30deg_21.csv"],
-        35: ["angulos_subida_35deg_22.csv", "angulos_subida_35deg_23.csv", "angulos_subida_35deg_24.csv"],
-        40: ["angulos_subida_40deg_25.csv", "angulos_subida_40deg_26.csv", "angulos_subida_40deg_27.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_35deg_22.csv.
+        35: ["angulos_subida_35deg_23.csv", "angulos_subida_35deg_24.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_40deg_25.csv.
+        40: ["angulos_subida_40deg_26.csv", "angulos_subida_40deg_27.csv"],
         45: ["angulos_subida_45deg_28.csv", "angulos_subida_45deg_29.csv", "angulos_subida_45deg_30.csv"],
-        50: ["angulos_subida_50deg_31.csv", "angulos_subida_50deg_32.csv", "angulos_subida_50deg_33.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_subida_50deg_31.csv.
+        50: ["angulos_subida_50deg_32.csv", "angulos_subida_50deg_33.csv"],
         55: ["angulos_subida_55deg_34.csv", "angulos_subida_55deg_35.csv", "angulos_subida_55deg_36.csv"],
         60: ["angulos_subida_60deg_37.csv", "angulos_subida_60deg_38.csv", "angulos_subida_60deg_39.csv"],
     },
@@ -67,15 +83,21 @@ MAPA = {
         0:  ["angulos_bajada_0_final_0deg_01.csv", "angulos_bajada_0_final_0deg_02.csv", "angulos_bajada_0_final_0deg_03.csv"],
         5:  ["angulos_bajada_final_5deg_02.csv", "angulos_bajada_final_5deg_03.csv", "angulos_bajada_final_5deg_04.csv"],
         # 10deg: 2 repeticiones de bajada_resto (13,14) + 1 de bajada_final
-        # (01) -- se descarta bajada_resto_10deg_15.csv (archivo cortado,
-        # 7898 bytes vs ~9000-9500 de las completas).
+        # (01) -- se descarta bajada_resto_10deg_15.csv (sospechosa de corte de conexion;
+        # 253 filas vs ~257 de las completas).
         10: ["angulos_bajada_resto_10deg_13.csv", "angulos_bajada_resto_10deg_14.csv", "angulos_bajada_final_10deg_01.csv"],
-        15: ["angulos_bajada_resto_15deg_10.csv", "angulos_bajada_resto_15deg_11.csv", "angulos_bajada_resto_15deg_12.csv"],
-        20: ["angulos_bajada_resto_20deg_07.csv", "angulos_bajada_resto_20deg_08.csv", "angulos_bajada_resto_20deg_09.csv"],
-        25: ["angulos_bajada_resto_25deg_04.csv", "angulos_bajada_resto_25deg_05.csv", "angulos_bajada_resto_25deg_06.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_bajada_resto_15deg_10.csv.
+        15: ["angulos_bajada_resto_15deg_11.csv", "angulos_bajada_resto_15deg_12.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_bajada_resto_20deg_07.csv.
+        20: ["angulos_bajada_resto_20deg_08.csv", "angulos_bajada_resto_20deg_09.csv"],
+        # std = 0 exacto: senal congelada (al mover el sensor la lectura no cambiaba,
+        # observado en vivo -- conector flojo). Se descarta: angulos_bajada_resto_25deg_04.csv.
+        25: ["angulos_bajada_resto_25deg_05.csv", "angulos_bajada_resto_25deg_06.csv"],
         # 30deg: se descartan angulos_bajada_30deg_19.csv (completo pero
-        # sospechoso, 13090 bytes vs ~9450 tipico) y 30deg_20.csv (cortado,
-        # 7410 bytes) -- se repitieron las 3 limpias en bajada_resto.
+        # sospechoso, 13090 bytes vs ~9450 tipico) y 30deg_20.csv (sospechosa de corte
+        # de conexion, 253 filas vs ~257) -- se repitieron las 3 limpias en bajada_resto.
         30: ["angulos_bajada_resto_30deg_01.csv", "angulos_bajada_resto_30deg_02.csv", "angulos_bajada_resto_30deg_03.csv"],
         35: ["angulos_bajada_35deg_16.csv", "angulos_bajada_35deg_17.csv", "angulos_bajada_35deg_18.csv"],
         40: ["angulos_bajada_40deg_13.csv", "angulos_bajada_40deg_14.csv", "angulos_bajada_40deg_15.csv"],

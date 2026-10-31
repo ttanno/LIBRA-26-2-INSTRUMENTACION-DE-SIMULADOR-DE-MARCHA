@@ -15,22 +15,31 @@ Caja de texto "Comando (t | k<masa_kg> | r)": escribe el comando y presiona
 Enter para mandarlo al ESP32 -- mismo efecto que escribirlo en el Monitor
 Serie.
 
+Boton "Grabar" / "Detener": guarda las muestras en
+grabaciones/hx711_<fecha>_<hora>.csv con columnas
+pc_time_iso, pc_time_unix_s, t_rel_s, raw_code, force_N, tared, calibrated.
+La hora de la PC se toma al llegar cada linea por el puerto, para poder
+alinear despues con otro equipo grabando en paralelo (ej. plataforma AMTI).
+
 Requiere: pip install -r requirements.txt
 """
 
 import argparse
+import csv
 import re
 import sys
 import threading
 import time
 from collections import deque
+from datetime import datetime
+from pathlib import Path
 from queue import Queue, Empty
 
 import serial
 import serial.tools.list_ports
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-from matplotlib.widgets import TextBox
+from matplotlib.widgets import Button, TextBox
 
 LINE_RE = re.compile(
     r"(?P<raw_code>-?\d+),"
@@ -68,7 +77,10 @@ def hilo_lectura_serial(ser: serial.Serial, cola: Queue, detener: threading.Even
             continue
         m = LINE_RE.search(linea)
         if m:
-            cola.put(m.groupdict())
+            # Marca de tiempo tomada aca, al llegar la linea, y no en el
+            # redibujado (que agrupa muestras cada ~100 ms) -- es la que se
+            # graba al CSV para sincronizar con otros equipos (ej. AMTI).
+            cola.put((time.time(), m.groupdict()))
         else:
             # Lineas que no matchean el CSV (mensajes de arranque, errores de
             # timeout, confirmaciones de tara/calibracion, etc.) -- se
@@ -133,8 +145,46 @@ def main():
     ax_f.legend(loc="upper right", fontsize=8)
     ax_f.grid(True, alpha=0.3)
 
-    ax_cmd = fig.add_axes([0.25, 0.03, 0.5, 0.05])
+    ax_cmd = fig.add_axes([0.25, 0.03, 0.42, 0.05])
     caja_comando = TextBox(ax_cmd, "Comando (t | k<masa_kg> | r): ")
+
+    # ---------------- Grabacion a CSV (boton Grabar / Detener) ----------------
+    ax_btn = fig.add_axes([0.72, 0.03, 0.2, 0.05])
+    boton_grabar = Button(ax_btn, "Grabar", color="0.85", hovercolor="0.95")
+    grabacion = {"archivo": None, "writer": None, "t_ini": 0.0, "n": 0, "ruta": None}
+
+    def iniciar_grabacion():
+        carpeta = Path(__file__).resolve().parent / "grabaciones"
+        carpeta.mkdir(exist_ok=True)
+        ruta = carpeta / f"hx711_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        f = open(ruta, "w", newline="", encoding="utf-8")
+        w = csv.writer(f)
+        w.writerow(["pc_time_iso", "pc_time_unix_s", "t_rel_s", "raw_code", "force_N", "tared", "calibrated"])
+        grabacion.update(archivo=f, writer=w, t_ini=time.time(), n=0, ruta=ruta)
+        boton_grabar.label.set_text("Detener")
+        ax_btn.set_facecolor("tomato")
+        boton_grabar.color = "tomato"
+        print(f"[visor] GRABANDO -> {ruta}  (inicio {datetime.now().isoformat(timespec='milliseconds')})")
+
+    def detener_grabacion():
+        if grabacion["archivo"] is None:
+            return
+        grabacion["archivo"].close()
+        dur = time.time() - grabacion["t_ini"]
+        print(f"[visor] Grabacion detenida: {grabacion['n']} muestras en {dur:.1f} s -> {grabacion['ruta']}")
+        grabacion.update(archivo=None, writer=None)
+        boton_grabar.label.set_text("Grabar")
+        ax_btn.set_facecolor("0.85")
+        boton_grabar.color = "0.85"
+
+    def on_grabar(_evento):
+        if grabacion["archivo"] is None:
+            iniciar_grabacion()
+        else:
+            detener_grabacion()
+        fig.canvas.draw_idle()
+
+    boton_grabar.on_clicked(on_grabar)
 
     def on_submit(texto):
         cmd = texto.strip()
@@ -150,8 +200,15 @@ def main():
         actualizado = False
         try:
             while True:
-                dato = cola.get_nowait()
-                ahora = time.time() - estado["t0"]
+                t_pc, dato = cola.get_nowait()
+                ahora = t_pc - estado["t0"]
+                if grabacion["writer"] is not None:
+                    grabacion["writer"].writerow([
+                        datetime.fromtimestamp(t_pc).isoformat(timespec="milliseconds"),
+                        f"{t_pc:.3f}", f"{t_pc - grabacion['t_ini']:.3f}",
+                        dato["raw_code"], dato["force_N"], dato["tared"], dato["calibrated"],
+                    ])
+                    grabacion["n"] += 1
                 t.append(ahora)
                 raw_d.append(float(dato["raw_code"]))
                 force_d.append(float(dato["force_N"]))
@@ -175,7 +232,11 @@ def main():
             )
             txt_estado.set_text(estado_txt)
             txt_estado.set_color("lime" if estado["calibrated"] else "orange")
-            fig.suptitle(f"HX711 (celda de carga)   |   ultima fuerza: {force_d[-1]:+.2f} N", y=0.98)
+            titulo = f"HX711 (celda de carga)   |   ultima fuerza: {force_d[-1]:+.2f} N"
+            if grabacion["writer"] is not None:
+                titulo += f"   |   ● GRABANDO {time.time() - grabacion['t_ini']:.1f} s"
+                grabacion["archivo"].flush()
+            fig.suptitle(titulo, y=0.98, color="red" if grabacion["writer"] is not None else "black")
 
         return l_r, l_f
 
@@ -184,6 +245,7 @@ def main():
     try:
         plt.show()
     finally:
+        detener_grabacion()  # si se cierra la ventana grabando, no se pierde el archivo
         detener.set()
         ser.close()
 
