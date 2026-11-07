@@ -291,6 +291,32 @@ void actualizarFiltroEMA(float headingCrudo, float rollCrudo, float pitchCrudo) 
   emaPitch = emaAngular(pitchCrudo, emaPitch, EMA_ALPHA);
 }
 
+// ---- Correccion lineal del roll (calibracion contra angulos conocidos) ----
+// Ver Reportes-Semanales/S9/Resumen-Semana9.md, secc. 3.3: ensayo con el
+// soporte de arco indexado 0-60 grados, subida + bajada, 26 puntos.
+// Ajuste: roll_medido = 0.9697 * angulo_real - 0.514  (R2 ~ 0.9999)
+// Correccion: roll_corregido = (roll_medido - ROLL_OFFSET_DEG) / ROLL_GANANCIA
+// En la simulacion el error maximo bajo de ~2.4 a ~0.5 grados.
+//
+// IMPORTANTE: la correccion se aplica sobre el roll FILTRADO (EMA) y SIN
+// restar el cero, porque esa es la senal con la que se hizo el ajuste
+// (columna "roll" de los CSV = Euler[...]). Por eso Euler[...] se sigue
+// mandando SIN corregir: asi las proximas pruebas de calibracion (T-IMU2)
+// siguen registrando la lectura original y se puede reajustar la recta.
+// La version corregida va en campos nuevos al final de la linea.
+//
+// Constantes PRELIMINARES: confirmar con T-IMU2 (0/10/20/30 grados, >=3
+// repeticiones) en el montaje final y validar en otra sesion (T-IMU3).
+// Si se recalibra, solo hay que cambiar estos dos numeros.
+const bool  CORRECCION_ROLL_ACTIVA = true;
+const float ROLL_GANANCIA   = 0.9697f;   // pendiente del ajuste (adimensional)
+const float ROLL_OFFSET_DEG = -0.514f;   // intercepto del ajuste (grados)
+
+float corregirRoll(float rollMedido) {
+  if (!CORRECCION_ROLL_ACTIVA) return rollMedido;
+  return (rollMedido - ROLL_OFFSET_DEG) / ROLL_GANANCIA;
+}
+
 // ---- Chequeo de salud de conexion (deteccion de ruido/deriva alta) ----
 // Umbral sacado de datos reales, no de una corazonada: en
 // Evidencias/pruebas-imu-S7 se midio std=~0.0000-0.0007 grados con la
@@ -494,7 +520,7 @@ void loop() {
   // IMPORTANTE: no cambiar el orden Euler[...] | LinAccel[...] -- el
   // parser de log_csv_bno055.py/visor_*.py busca ese patron pegado. Los
   // campos nuevos (EulerCrudo) van al final para no romperlo.
-  char buf[340];
+  char buf[420];
   int len = snprintf(buf, sizeof(buf),
                       "Calib[sys,gyro,accel,mag]=%u,%u,%u,%u | Euler[heading,roll,pitch]=%.2f,%.2f,%.2f | LinAccel[x,y,z]=%.2f,%.2f,%.2f | AccRaw[x,y,z]=%.1f,%.1f,%.1f | Zero=%s",
                       calib.SYS, calib.GYR, calib.ACC, calib.MAG,
@@ -512,6 +538,17 @@ void loop() {
   len += snprintf(buf + len, sizeof(buf) - len,
                    " | EulerCrudo[heading,roll,pitch]=%.2f,%.2f,%.2f",
                    eul.head, eul.roll, eul.pitch);
+
+  // Roll corregido (ver corregirRoll()). RollCorr = angulo corregido en el
+  // marco del sensor; RollCorrAbs = corregido y relativo al cero guardado
+  // (solo si hay cero). Para RollCorrAbs se corrige cada lectura antes de
+  // restar, asi el cero tambien queda en la escala corregida.
+  float rollCorr = corregirRoll(emaRoll);
+  len += snprintf(buf + len, sizeof(buf) - len, " | RollCorr=%.2f", rollCorr);
+  if (zeroIsSet) {
+    len += snprintf(buf + len, sizeof(buf) - len, " | RollCorrAbs=%.2f",
+                    rollCorr - corregirRoll(zeroRoll));
+  }
 
   // Broadcast: le llega a cualquier laptop conectada a la red del ESP32,
   // sin tener que saber su IP de antemano.
