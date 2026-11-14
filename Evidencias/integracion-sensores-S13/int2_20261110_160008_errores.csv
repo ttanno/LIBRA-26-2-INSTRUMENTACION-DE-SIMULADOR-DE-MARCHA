@@ -1,0 +1,13 @@
+t_s,sensor,motivo,detalle
+2.506871,BNO055,lectura,0
+16.199094,ToF2,i2c,4
+19.585089,ToF2,i2c,4
+21.908306,BNO055,lectura,0
+27.006990,BNO055,lectura,0
+30.368445,ToF1,i2c,4
+33.008973,BNO055,lectura,0
+34.428338,ToF1,i2c,4
+43.507680,BNO055,lectura,0
+48.109147,BNO055,lectura,0
+57.409100,BNO055,lectura,0
+58.307755,BNO055,lectura,0

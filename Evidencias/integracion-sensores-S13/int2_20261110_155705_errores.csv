@@ -1,0 +1,5 @@
+t_s,sensor,motivo,detalle
+25.294081,ToF1,i2c,4
+32.055531,ToF2,i2c,4
+35.885856,ToF1,i2c,4
+41.785867,ToF2,i2c,4

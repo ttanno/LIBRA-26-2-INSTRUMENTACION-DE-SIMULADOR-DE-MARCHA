@@ -69,6 +69,62 @@ const uint16_t UDP_PORT = 4211;
 IPAddress BROADCAST_IP(192, 168, 4, 255);  // subred fija del modo AP del ESP32
 
 BNO bno(&Wire1, 0x28);   // bus I2C dedicado (GPIO17 SDA / GPIO16 SCL)
+
+// ---- Lectura verificada de 2 bytes (reemplaza getEul()/getAxis()) ----
+// getEul() y getAxis() de la libreria leen 6 bytes de una vez y no detectan
+// lecturas corruptas: con el core ESP32 3.3.12, ~1-2 % de las muestras
+// llegaban con bytes en 0xFF o bits cambiados y pasaban como validas (ej.
+// roll=-0.06 en vez de -37.69). Medido el 2026-11-10 en la galleta, ver
+// test_integracion_sensores.ino y Registro (P-19). Aqui cada eje se lee en su
+// propia transaccion de 2 bytes y se acepta solo si dos lecturas seguidas
+// coinciden (hasta 3 intentos). Registros de pagina 0 (getCalStatus() deja
+// seleccionada la pagina 0). Escalas iguales a las de la libreria:
+// Euler 16 LSB/grado; ACC y LIA 1 LSB = 1 mg (setUnit() de la libreria).
+const uint8_t REG_EUL = 0x1A;   // heading, roll, pitch
+const uint8_t REG_ACC = 0x08;   // x, y, z (mg)
+const uint8_t REG_LIA = 0x28;   // x, y, z (mg)
+
+bool leerRegistro16(uint8_t reg, int16_t& raw) {
+  Wire1.beginTransmission(0x28);
+  Wire1.write(reg);
+  if (Wire1.endTransmission() != 0) return false;
+  if (Wire1.requestFrom((uint8_t)0x28, (uint8_t)2) != 2) {
+    while (Wire1.available()) Wire1.read();
+    return false;
+  }
+  uint8_t lo = Wire1.read(), hi = Wire1.read();
+  raw = (int16_t)((hi << 8) | lo);
+  return true;
+}
+
+bool leerEjeVerificado(uint8_t reg, int16_t& raw) {
+  int16_t anterior = 0, actual = 0;
+  bool hayAnterior = false;
+  for (int intento = 0; intento < 3; intento++) {
+    if (!leerRegistro16(reg, actual)) { hayAnterior = false; continue; }
+    if (hayAnterior && actual == anterior) { raw = actual; return true; }
+    anterior = actual;
+    hayAnterior = true;
+  }
+  return false;
+}
+
+// Lee los 3 ejes consecutivos que empiezan en 'base' (2 bytes cada uno)
+bool leerTresEjes(uint8_t base, float factor, float& a, float& b, float& c) {
+  int16_t ra, rb, rc;
+  if (!leerEjeVerificado(base, ra) || !leerEjeVerificado(base + 2, rb) ||
+      !leerEjeVerificado(base + 4, rc)) return false;
+  a = ra / factor; b = rb / factor; c = rc / factor;
+  return true;
+}
+
+bool leerEulVerificado(BNO::sEulAnalog_t& eul) {
+  return leerTresEjes(REG_EUL, 16.0f, eul.head, eul.roll, eul.pitch);
+}
+
+bool leerAxisVerificado(uint8_t base, BNO::sAxisAnalog_t& eje) {
+  return leerTresEjes(base, 1.0f, eje.x, eje.y, eje.z);
+}
 WiFiUDP udp;
 
 Preferences prefs;
@@ -127,8 +183,16 @@ void establecerZeroActual() {
   double sumHeading = 0, sumRoll = 0, sumPitch = 0;
   double sumRollSq = 0, sumPitchSq = 0;
 
+  bno.getCalStatus();  // deja seleccionada la pagina 0 de registros
+  int intentos = 0;
   for (int i = 0; i < HOME_SAMPLES; i++) {
-    BNO::sEulAnalog_t eul = bno.getEul();
+    BNO::sEulAnalog_t eul;
+    if (!leerEulVerificado(eul)) {
+      // Lectura no verificada: no cuenta como muestra (con tope de intentos)
+      if (++intentos < HOME_SAMPLES) i--;
+      delay(10);
+      continue;
+    }
     sumHeading += eul.head;
     sumRoll += eul.roll;
     sumPitch += eul.pitch;
@@ -450,9 +514,11 @@ void setup() {
   // en converger porque arranco desde 0. Este "calentamiento" descarta las
   // primeras lecturas y recien ahi siembra el filtro con un valor real.
   Serial.println("Estabilizando fusion del sensor antes de iniciar el filtro EMA...");
-  BNO::sEulAnalog_t eulCalentamiento;
+  BNO::sEulAnalog_t eulCalentamiento = {0};
+  bno.getCalStatus();  // deja seleccionada la pagina 0 de registros
   for (int i = 0; i < 30; i++) {
-    eulCalentamiento = bno.getEul();
+    BNO::sEulAnalog_t e;
+    if (leerEulVerificado(e)) eulCalentamiento = e;  // se queda con la ultima verificada
     delay(20);
   }
   emaHeading = eulCalentamiento.head;
@@ -500,9 +566,16 @@ void loop() {
   }
 
   BNO::sRegCalibState_t calib = bno.getCalStatus();
-  BNO::sEulAnalog_t eul = bno.getEul();
-  BNO::sAxisAnalog_t lia = bno.getAxis(BNO::eAxisLia);
-  BNO::sAxisAnalog_t accRaw = bno.getAxis(BNO::eAxisAcc);  // mg -- usado por calibrar_acelerometro.py
+  BNO::sEulAnalog_t eul;
+  BNO::sAxisAnalog_t lia;
+  BNO::sAxisAnalog_t accRaw;  // mg -- usado por calibrar_acelerometro.py
+  if (!leerEulVerificado(eul) || !leerAxisVerificado(REG_LIA, lia) ||
+      !leerAxisVerificado(REG_ACC, accRaw)) {
+    // Lectura no verificada (ver leerEjeVerificado()): esta muestra no se
+    // envia ni entra al EMA, para no mezclar valores corruptos con los buenos.
+    delay(100);
+    return;
+  }
 
   float liaX = lia.x * MG_TO_MS2;
   float liaY = lia.y * MG_TO_MS2;
